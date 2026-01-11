@@ -1,0 +1,383 @@
+# Ready2Intern POC - Development TODO
+
+## Week 1: Project Setup & Basic Dashboard
+
+### Frontend Setup
+- [ ] Initialize Vite + React + TypeScript project
+- [ ] Install dependencies: Tailwind CSS, React Router, Axios
+- [ ] Configure Tailwind with custom theme colors (purple/blue gradient)
+- [ ] Set up project folder structure (components, pages, hooks, utils, types)
+- [ ] Create basic layout components: Header, Footer, MainLayout
+- [ ] Implement theme context and toggle hook
+- [ ] Build ThemeToggle button component
+- [ ] Create Dashboard page shell
+- [ ] Add responsive breakpoints and test mobile layout
+- [ ] Configure environment variables for API URL
+
+### Backend Setup
+- [ ] Initialize FastAPI project with uv
+- [ ] Set up project structure: routers/, services/, models/, utils/
+- [ ] Create main.py with FastAPI app initialization
+- [ ] Configure CORS middleware for localhost:5173
+- [ ] Create .env.example with required variables
+- [ ] Implement health check endpoint GET /api/health
+- [ ] Create file system directories: data/resumes/, data/company-tenets/, data/sessions/
+- [ ] Add logging configuration
+- [ ] Create requirements.txt or pyproject.toml
+- [ ] Write README with setup and run instructions
+
+### Integration & Testing
+- [ ] Test frontend runs on localhost:5173
+- [ ] Test backend runs on localhost:8000
+- [ ] Verify frontend can call health check endpoint
+- [ ] Test theme toggle in light and dark modes
+- [ ] Verify responsive layout on mobile and desktop
+
+---
+
+## Week 2: Resume Upload & Company Selection
+
+### Resume Upload - Frontend
+- [ ] Create FileDropzone component
+- [ ] Add drag-and-drop event handlers
+- [ ] Implement click-to-upload fallback
+- [ ] Add file type validation (PDF, DOCX only)
+- [ ] Add file size validation (max 5MB)
+- [ ] Build upload progress indicator component
+- [ ] Create success/error toast notifications
+- [ ] Add file preview display after upload
+- [ ] Store session_id in React state/context
+- [ ] Handle upload errors with user-friendly messages
+
+### Resume Upload - Backend
+- [ ] Create POST /api/upload endpoint
+- [ ] Implement file validation middleware
+- [ ] Generate unique session IDs (UUID)
+- [ ] Save uploaded files to data/resumes/ with naming convention
+- [ ] Return file metadata response (filename, size, session_id)
+- [ ] Add error handling for invalid files
+- [ ] Implement file cleanup on validation failure
+- [ ] Add file size limits to endpoint
+
+### Company Selection - Frontend
+- [ ] Download company logos (Amazon, Meta, Google)
+- [ ] Create CompanyLogoSelector component
+- [ ] Implement single-select radio button logic
+- [ ] Add checkmark overlay for selected state
+- [ ] Style hover and selected states
+- [ ] Store selected company in state
+- [ ] Add company selection validation
+
+### Company Selection - Backend
+- [ ] Create GET /api/companies endpoint
+- [ ] Define company data structure (name, logo_url, color, tenets_file)
+- [ ] Store company logos in public/logos/
+- [ ] Create company tenets files in data/company-tenets/:
+  - [ ] amazon-leadership-principles.txt
+  - [ ] meta-core-values.txt
+  - [ ] google-principles.txt
+- [ ] Return company list with metadata
+
+### Integration & Testing
+- [ ] Test end-to-end resume upload flow
+- [ ] Verify files persist in data/resumes/
+- [ ] Test company selection UI interaction
+- [ ] Verify session management works
+- [ ] Test error handling for invalid uploads
+
+---
+
+## Week 3: Role Description Input & Analyze Button
+
+### Role Description Input - Frontend
+- [ ] Create RoleDescriptionInput component (textarea)
+- [ ] Implement character counter
+- [ ] Add real-time validation (min 50, max 10000 chars)
+- [ ] Display validation error messages
+- [ ] Add placeholder text with example
+- [ ] Store role description in state
+- [ ] Style textarea with proper sizing
+
+### Role Description Input - Backend
+- [ ] Add role description validation to analyze endpoint
+- [ ] Validate minimum length (50 chars)
+- [ ] Validate maximum length (10,000 chars)
+- [ ] Return structured validation errors
+
+### Analyze Button - Frontend
+- [ ] Create AnalyzeButton component
+- [ ] Implement disabled state logic (check all required fields)
+- [ ] Add loading spinner component
+- [ ] Display progress messages during analysis
+- [ ] Handle API call to /api/analyze
+- [ ] Navigate to results page on success
+- [ ] Show error modal on failure
+
+### Analyze Button - Backend
+- [ ] Create POST /api/analyze endpoint
+- [ ] Define request schema (session_id, company, role_description, target_deadline)
+- [ ] Validate all required fields
+- [ ] Generate analysis_id
+- [ ] Return immediate response with analysis_id
+- [ ] Create session directory structure
+
+### Integration & Testing
+- [ ] Test analyze button enable/disable logic
+- [ ] Verify all form fields are validated
+- [ ] Test loading state displays correctly
+- [ ] Verify API endpoint accepts requests
+- [ ] Test error handling for missing fields
+
+---
+
+## Week 4: LLM Integration (Resume & Role Matching)
+
+### LLM Setup
+- [ ] Install Anthropic SDK
+- [ ] Configure API key in environment variables
+- [ ] Create LLM service class/module
+- [ ] Implement retry logic for API failures
+- [ ] Add timeout handling
+- [ ] Create prompt template utilities
+
+### Resume Analysis - Backend
+- [ ] Create resume parsing service
+- [ ] Implement PDF text extraction (PyPDF2 or pdfplumber)
+- [ ] Implement DOCX text extraction (python-docx)
+- [ ] Create resume analysis prompt template
+- [ ] Call Claude API with resume text
+- [ ] Parse LLM response into structured format
+- [ ] Extract: skills, experience, education, projects
+- [ ] Save results to data/sessions/{session_id}/resume_analysis.json
+- [ ] Add error handling for parsing failures
+
+### Role Matching - Backend
+- [ ] Create role matching service
+- [ ] Load company tenets from file system
+- [ ] Create role matching prompt template
+- [ ] Combine resume + role description + company tenets
+- [ ] Call Claude API for matching analysis
+- [ ] Calculate ATS score (0-100)
+- [ ] Calculate role match score (0-100)
+- [ ] Calculate company fit score (0-100)
+- [ ] Compute overall score (weighted average)
+- [ ] Save results to data/sessions/{session_id}/match_analysis.json
+- [ ] Add detailed explanations for each score
+
+### Integration & Testing
+- [ ] Test resume file reading from file system
+- [ ] Verify Claude API calls succeed
+- [ ] Test resume data extraction accuracy
+- [ ] Verify match scores are calculated correctly
+- [ ] Test error handling for API failures
+- [ ] Verify all results saved to file system
+
+---
+
+## Week 5: LLM Integration (Gap Analysis & Timeline)
+
+### Gap Analysis - Backend
+- [ ] Create gap analysis service
+- [ ] Load match analysis results
+- [ ] Create gap identification prompt template
+- [ ] Call Claude API to identify gaps
+- [ ] Extract missing skills
+- [ ] Extract missing experience areas
+- [ ] Assign priority levels (High, Medium, Low)
+- [ ] Generate actionable recommendations for each gap
+- [ ] Provide specific examples and resources
+- [ ] Save results to data/sessions/{session_id}/gap_analysis.json
+
+### Timeline Generation - Backend
+- [ ] Create timeline generation service
+- [ ] Load gap analysis results
+- [ ] Calculate days until target deadline
+- [ ] Create timeline generation prompt template
+- [ ] Call Claude API to generate timeline
+- [ ] Structure timeline into phases:
+  - [ ] Immediate (0-2 weeks)
+  - [ ] Short-term (2-6 weeks)
+  - [ ] Medium-term (6+ weeks)
+- [ ] Assign specific tasks to each phase
+- [ ] Create milestone checkpoints
+- [ ] Add estimated hours per task
+- [ ] Save results to data/sessions/{session_id}/timeline.json
+
+### Integration & Testing
+- [ ] Test gap analysis identifies relevant gaps
+- [ ] Verify priorities are assigned correctly
+- [ ] Test recommendations are actionable
+- [ ] Verify timeline respects deadline
+- [ ] Test timeline phases are logical
+- [ ] Verify all results saved correctly
+
+---
+
+## Week 6: Results Display & Export
+
+### Results Retrieval - Backend
+- [ ] Create GET /api/results/{session_id} endpoint
+- [ ] Load all analysis JSON files from session directory
+- [ ] Combine into single response object
+- [ ] Add error handling for missing files
+- [ ] Return complete analysis results
+
+### Overall Score Display - Frontend
+- [ ] Create ResultsPage component
+- [ ] Create OverallScoreCard component
+- [ ] Implement animated circular progress bar
+- [ ] Add score counting animation on mount
+- [ ] Display gradient background based on score range
+- [ ] Show status message (Excellent/Good/Needs Work)
+- [ ] Add confetti animation for high scores (optional)
+
+### Score Breakdown Display - Frontend
+- [ ] Create CategoryScoreCard component
+- [ ] Display three score cards: ATS, Role Match, Company Fit
+- [ ] Implement individual progress bars
+- [ ] Add hover tooltips with score explanations
+- [ ] Make layout responsive (stacked on mobile)
+- [ ] Add icons for each category
+
+### Strengths & Gaps Display - Frontend
+- [ ] Create StrengthsSection component
+- [ ] Display list of strengths with evidence
+- [ ] Create GapsSection component
+- [ ] Display gaps with priority badges
+- [ ] Implement expandable cards for details
+- [ ] Show recommendations for each gap
+- [ ] Add color coding for priority levels
+- [ ] Include specific examples and resources
+
+### Timeline Display - Frontend
+- [ ] Create TimelineSection component
+- [ ] Build timeline visualization (vertical or horizontal)
+- [ ] Display phases with date ranges
+- [ ] Show tasks within each phase
+- [ ] Implement expandable phase sections
+- [ ] Highlight milestones
+- [ ] Add progress indicators (optional for POC)
+
+### PDF Export - Backend
+- [ ] Install PDF generation library (ReportLab or WeasyPrint)
+- [ ] Create PDF template with branding
+- [ ] Create POST /api/export/{session_id} endpoint
+- [ ] Generate PDF with all sections:
+  - [ ] Overall score
+  - [ ] Score breakdown
+  - [ ] Strengths
+  - [ ] Gaps with recommendations
+  - [ ] Timeline
+- [ ] Format PDF with proper styling
+- [ ] Return PDF file for download
+
+### PDF Export - Frontend
+- [ ] Add "Download PDF" button to results header
+- [ ] Trigger API call on button click
+- [ ] Show download progress indicator
+- [ ] Handle download errors
+- [ ] Provide success feedback
+
+### Integration & Testing
+- [ ] Test results endpoint returns complete data
+- [ ] Verify all UI components display correctly
+- [ ] Test animations and interactions
+- [ ] Verify PDF generates with all content
+- [ ] Test PDF download works
+- [ ] Test responsive layout on all screen sizes
+
+---
+
+## Week 6: Error Handling, Polish & Deployment
+
+### Error Handling - Frontend
+- [ ] Add React error boundaries
+- [ ] Implement toast notification system
+- [ ] Create loading skeleton components
+- [ ] Improve all error messages to be user-friendly
+- [ ] Add "Start New Analysis" button
+- [ ] Implement session cleanup on new analysis
+- [ ] Add 404 page for invalid routes
+- [ ] Add network error handling
+
+### Error Handling - Backend
+- [ ] Add comprehensive try-catch blocks
+- [ ] Implement request validation with Pydantic
+- [ ] Add structured logging (JSON format)
+- [ ] Handle LLM API failures gracefully
+- [ ] Add rate limiting middleware
+- [ ] Implement request timeout handling
+- [ ] Add health check for dependencies
+- [ ] Create error response schemas
+
+### Testing
+- [ ] Write frontend unit tests for components
+- [ ] Write frontend integration tests for user flows
+- [ ] Write backend unit tests for services
+- [ ] Write backend integration tests for endpoints
+- [ ] Test all error paths
+- [ ] Test edge cases (empty files, malformed data)
+- [ ] Run accessibility audit
+- [ ] Test cross-browser compatibility
+
+### Polish & Optimization
+- [ ] Optimize images and assets
+- [ ] Add meta tags for SEO
+- [ ] Implement loading states everywhere
+- [ ] Add micro-interactions and transitions
+- [ ] Optimize API response times
+- [ ] Add request caching where appropriate
+- [ ] Minify and bundle frontend assets
+- [ ] Add favicon and app icons
+
+### Documentation
+- [ ] Update README with complete setup instructions
+- [ ] Document API endpoints
+- [ ] Add architecture diagram
+- [ ] Document environment variables
+- [ ] Create deployment guide
+- [ ] Add troubleshooting section
+
+### Deployment Preparation
+- [ ] Create production environment config
+- [ ] Set up environment variables for production
+- [ ] Configure CORS for production domain
+- [ ] Test production build locally
+- [ ] Create deployment scripts
+- [ ] Set up file system directories on server
+- [ ] Configure Anthropic API key on server
+- [ ] Test end-to-end in production environment
+
+---
+
+## Success Checklist
+
+### Functionality
+- [ ] Users can upload resume (PDF/DOCX)
+- [ ] Users can select target company
+- [ ] Users can paste role description
+- [ ] Analysis completes in < 2 minutes
+- [ ] Results display all sections correctly
+- [ ] PDF export works with all content
+- [ ] Users can start new analysis
+
+### Performance
+- [ ] Page load time < 2 seconds
+- [ ] API response time < 3 seconds
+- [ ] No memory leaks
+- [ ] Smooth animations (60fps)
+
+### Quality
+- [ ] No console errors
+- [ ] No linter warnings
+- [ ] 80%+ test coverage
+- [ ] All acceptance criteria met
+- [ ] Responsive on mobile and desktop
+- [ ] Accessible (keyboard navigation, screen readers)
+
+### User Experience
+- [ ] Clear feedback at every step
+- [ ] Helpful error messages
+- [ ] Intuitive workflow
+- [ ] Professional visual design
+- [ ] Loading states prevent confusion
