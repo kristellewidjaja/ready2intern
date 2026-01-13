@@ -5,12 +5,18 @@
 
 ## How to Use These Prompts
 
-1. **Copy the prompt** for the feature you want to build
-2. **Start a new chat session** with your coding agent
-3. **Paste the prompt** - Agent will read reference docs for details
-4. **Agent works through tasks** following TODO.md
-5. **Review and test** the completed feature
-6. **Move to next feature** in a new session
+1. **Create feature branch** before starting:
+   ```bash
+   git checkout main && git pull origin main
+   git checkout -b feature/slice-N-name
+   ```
+2. **Copy the prompt** for the feature you want to build
+3. **Start a new chat session** with your coding agent
+4. **Paste the prompt** - Agent will read reference docs for details
+5. **Agent works through tasks** following TODO.md
+6. **Review and test** the completed feature
+7. **Commit, push, and create PR** from feature branch
+8. **Move to next feature** in a new session
 
 ---
 
@@ -43,7 +49,16 @@ Set up complete project foundation:
 
 Follow TODO checklist in sequence. All acceptance criteria in Implementation Plan.
 
-Commit: "feat: initial project scaffold with health check (slice 1)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push: "feat: initial project scaffold with health check (slice 1)"
+9. Create pull request from feature branch to main
 ```
 
 ---
@@ -62,7 +77,16 @@ Implement end-to-end resume upload with drag-and-drop, file validation, and sess
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add resume upload feature (slice 2)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add resume upload feature (slice 2)"
 ```
 
 ### Feature Slice 3: Company Selection
@@ -77,7 +101,16 @@ Build company selector with logos for Amazon, Meta, and Google. Create company t
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add company selection feature (slice 3)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add company selection feature (slice 3)"
 ```
 
 ---
@@ -96,7 +129,16 @@ Build textarea with character counter and validation (min 50, max 10,000 chars).
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add role description input feature (slice 4)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add role description input feature (slice 4)"
 ```
 
 ### Feature Slice 5: Analyze Button & Loading State
@@ -111,7 +153,16 @@ Create analyze button with loading states and progress indicators. Set up /api/a
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add analyze button and loading state (slice 5)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add analyze button and loading state (slice 5)"
 ```
 
 ---
@@ -130,7 +181,16 @@ Integrate Anthropic Claude API for resume parsing. Extract skills, experience, e
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add LLM resume analysis (slice 6)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add LLM resume analysis (slice 6)"
 ```
 
 ### Feature Slice 7: LLM - Role Matching
@@ -145,7 +205,16 @@ Implement role matching with company tenets. Calculate ATS, Role Match, and Comp
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add LLM role matching analysis (slice 7)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add LLM role matching analysis (slice 7)"
 ```
 
 ---
@@ -164,7 +233,16 @@ Identify skill gaps with priority levels and generate actionable recommendations
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add gap analysis with recommendations (slice 8)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add gap analysis with recommendations (slice 8)"
 ```
 
 ### Feature Slice 9: LLM - Timeline Generation
@@ -179,7 +257,16 @@ Generate personalized development timeline with phases and milestones based on t
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add timeline generation (slice 9)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add timeline generation (slice 9)"
 ```
 
 ---
@@ -198,7 +285,16 @@ Create results page with animated overall score display and /api/results endpoin
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add overall score display (slice 10)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add overall score display (slice 10)"
 ```
 
 ### Feature Slice 11: Score Breakdown Display
@@ -213,7 +309,16 @@ Display three score cards: ATS, Role Match, Company Fit with tooltips and progre
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add score breakdown display (slice 11)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add score breakdown display (slice 11)"
 ```
 
 ### Feature Slice 12: Strengths & Gaps Display
@@ -228,7 +333,16 @@ Display strengths and gaps with expandable cards, priority badges, and recommend
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add strengths and gaps display (slice 12)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add strengths and gaps display (slice 12)"
 ```
 
 ### Feature Slice 13: Timeline Display
@@ -243,7 +357,16 @@ Build timeline visualization with phases, tasks, and milestones.
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add timeline visualization (slice 13)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add timeline visualization (slice 13)"
 ```
 
 ### Feature Slice 14: PDF Export
@@ -258,7 +381,16 @@ Implement PDF generation and download with all analysis sections.
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add PDF export functionality (slice 14)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add PDF export functionality (slice 14)"
 ```
 
 ### Feature Slice 15: Error Handling & Polish
@@ -273,7 +405,16 @@ Add comprehensive error handling, loading states, testing, and final polish.
 
 Follow TODO checklist. All details in reference docs.
 
-Commit: "feat: add error handling and polish (slice 15)"
+When complete:
+1. Write unit tests (frontend components + backend endpoints)
+2. Run all tests and verify they pass
+3. Test the feature end-to-end manually
+4. Check off completed tasks in Ready2Intern-TODO.md
+5. Update PROGRESS.md with what was built and lessons learned
+6. Update AGENTS.md with new patterns, services, or key decisions
+7. Log any issues or technical debt in ISSUES.md
+8. Commit and push:
+9. Create pull request: "feat: add error handling and polish (slice 15)"
 ```
 
 ---
@@ -362,6 +503,112 @@ Otherwise, **trust your documentation** and keep prompts minimal.
 
 ---
 
+## Testing Requirements
+
+After implementing each feature, the agent must:
+
+### 1. Write Unit Tests
+**Backend:**
+```bash
+# Test API endpoints, services, models
+pytest tests/test_[feature].py -v
+```
+
+**Frontend:**
+```bash
+# Test components, hooks, utilities
+npm test -- [ComponentName]
+```
+
+### 2. Run All Tests
+```bash
+# Backend
+cd backend && pytest tests/ -v
+
+# Frontend
+cd frontend && npm test
+```
+
+### 3. Manual End-to-End Testing
+- Test the complete user flow in browser
+- Verify all acceptance criteria met
+- Test error cases and edge cases
+- Check responsive design (mobile/desktop)
+
+---
+
+## Documentation Updates
+
+After completing each feature slice, the agent must:
+
+### 1. Update Ready2Intern-TODO.md
+```markdown
+Change: - [ ] Task description
+To:     - [x] Task description
+```
+
+### 2. Update PROGRESS.md
+Add to the appropriate section:
+```markdown
+### ✅ Feature Slice N: [Feature Name] (Completed)
+**Completed:** [Date]
+
+**What Was Built:**
+- Component/file names created
+- API endpoints implemented
+- Key functionality delivered
+
+**Key Decisions:**
+- Technical choices made
+- Patterns established
+- Libraries/tools used
+
+**Lessons Learned:**
+- What worked well
+- What to improve
+- Gotchas to remember
+
+**Integration Points:**
+- How it connects to other features
+- State management approach
+- API contracts established
+
+**Tests Added:**
+- Unit tests written
+- Test coverage percentage
+- Manual testing completed
+```
+
+### 3. Update AGENTS.md
+Add new knowledge acquired during implementation:
+```markdown
+**Status Update:**
+- Change ⏳ to 🚧 when starting
+- Change 🚧 to ✅ when complete
+
+**Add Implementation Notes:**
+- New services/utilities created
+- Reusable patterns established
+- API client methods added
+- Important configuration changes
+- Common pitfalls discovered
+```
+
+Keep updates concise - 1-3 lines per item.
+
+### 4. Update ISSUES.md (if needed)
+Document any blockers, bugs, or technical debt:
+```markdown
+### Issue #N: [Brief Title]
+**Type:** Bug | Technical Debt | Blocker
+**Feature:** Slice N - [Feature Name]
+**Description:** [What's wrong or needs improvement]
+**Workaround:** [Temporary solution if any]
+**Priority:** High | Medium | Low
+```
+
+---
+
 ## Summary
 
 **Key Principle:** Your reference documents contain all the details. Prompts should just point the agent to the right section.
@@ -373,3 +620,12 @@ Otherwise, **trust your documentation** and keep prompts minimal.
 - Clearer communication (reference-based)
 
 **Remember:** If it's in the docs, don't put it in the prompt.
+
+**After Each Feature (Required):**
+1. ✅ Write and run unit tests (frontend + backend)
+2. ✅ Test feature end-to-end manually
+3. ✅ Update TODO.md (check off completed tasks)
+4. ✅ Update PROGRESS.md (what was built + lessons learned)
+5. ✅ Update AGENTS.md (new patterns/services/decisions - keep concise)
+6. ✅ Update ISSUES.md (if bugs or technical debt found)
+7. ✅ Commit with proper message
