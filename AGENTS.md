@@ -166,11 +166,12 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 1)
+### Current Status (Week 2)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
 - ✅ Theme toggle (light/dark mode)
+- ✅ Resume upload (drag-and-drop, validation, session management)
 
 ## Implementation Notes
 
@@ -183,13 +184,22 @@ Track implementation status in this file using:
 
 **Services Created:**
 - Health check endpoint: `/api/health` (GET)
+- FileService: File validation, storage, and session ID generation (`app/services/file_service.py`)
+- Resume upload endpoint: `/api/upload` (POST)
 
 **Reusable Patterns:**
 - ThemeContext pattern for global state
 - MainLayout wrapper for consistent page structure
 - Environment variable configuration with `.env.example` files
+- Service layer pattern: Business logic separated from route handlers
+- FormData uploads with progress tracking via Axios
+- Drag-and-drop file upload with click fallback
+- Client + server-side validation for file uploads
 
 **Common Pitfalls:**
 - npm cache permissions: use `--cache /tmp/npm-cache` or fix with `sudo chown`
 - Tailwind v4 syntax: use `@import "tailwindcss"` not `@tailwind` directives
 - FastAPI on_event deprecated: consider lifespan handlers for future endpoints
+- File upload requires `python-multipart` package for FastAPI
+- MIME type validation: use file extension as fallback if python-magic unavailable
+- File naming: Include timestamp to avoid collisions when same session uploads twice
