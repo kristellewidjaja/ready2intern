@@ -74,18 +74,75 @@ Integration:
 
 ## In Progress
 
-_No features in progress. Ready for Feature Slice 2._
+_No features in progress. Ready for Feature Slice 3._
+
+---
+
+## Completed Features (Continued)
+
+### ✅ Feature Slice 2: Resume Upload (Week 2)
+**Completed:** January 13, 2026
+
+**What Was Built:**
+
+Backend:
+- Pydantic models for upload response (`app/models/upload.py`)
+- FileService class for file validation and storage (`app/services/file_service.py`)
+- POST `/api/upload` endpoint with comprehensive validation (`app/api/routes/upload.py`)
+- Unit tests with 8 test cases, all passing (`tests/test_upload.py`)
+
+Frontend:
+- TypeScript types for upload responses (`src/types/upload.ts`)
+- API service with progress tracking (`src/services/api.ts`)
+- FileDropzone component with drag-and-drop (`src/components/FileDropzone.tsx`)
+- Integration into Dashboard with session state management
+- Upload progress indicator and success/error states
+
+Integration:
+- Backend validates file type (PDF, DOCX) and size (max 5MB)
+- Files saved to `data/resumes/` with naming convention `{session_id}_{timestamp}.{ext}`
+- Session IDs generated as UUIDs
+- Frontend displays upload progress and handles all error states
+- 10 total tests passing (8 upload + 2 health check)
+
+**Key Lessons Learned:**
+1. File validation should happen both client-side (UX) and server-side (security)
+2. Using FormData for multipart file uploads with proper Content-Type headers
+3. Progress tracking with Axios onUploadProgress provides great UX
+4. Session ID pattern: UUID ensures uniqueness across concurrent uploads
+5. File naming: `{session_id}_{timestamp}.{ext}` prevents collisions
+
+**Files Created:**
+- Backend: 3 new files (models, service, route) + 1 test file
+- Frontend: 3 new files (types, FileDropzone component, updated Dashboard)
+- Total: 6 new files, 2 modified files
+
+**Integration Points:**
+- FileDropzone component accepts `onUploadSuccess` callback for parent state updates
+- Session ID stored in Dashboard state for future use in analysis flow
+- API service centralized in `services/api.ts` for reuse
+- Error responses follow consistent ErrorResponse schema
+
+**Technical Patterns Established:**
+- Service layer pattern: FileService encapsulates file operations
+- Validation pipeline: extension → size → MIME type (when available)
+- Optimistic UI: Show progress immediately, handle errors gracefully
+- State management: Session ID flows from upload → Dashboard → future analysis
+
+**Tests Added:**
+- 8 backend unit tests: valid uploads, invalid types, size limits, empty files, uniqueness
+- All tests use TestClient with mock file objects
+- Tests verify both API responses and filesystem persistence
+- Test coverage for happy path and all error cases
 
 ---
 
 ## Pending Features
 
-### ⏳ Feature Slice 2: Resume Upload (Week 2)
-- File dropzone component
-- File validation
-- Backend upload endpoint
-- Session ID generation
-- File storage
+### ⏳ Feature Slice 3: Company Selection (Week 2)
+- Company logo selector
+- Company list endpoint
+- Company tenets storage
 
 ### ⏳ Feature Slice 3: Company Selection (Week 2)
 - Company logo selector
