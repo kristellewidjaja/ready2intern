@@ -30,7 +30,7 @@ This guide explains how to effectively work with coding agents to build features
 ### 1. Review Project Status
 ```bash
 # Read current state
-cat PROJECT.md
+cat PROGRESS.md
 
 # Check for known issues
 cat ISSUES.md
@@ -45,12 +45,33 @@ From `Ready2Intern-Implementation-Plan.md`, select the next feature:
 - Feature Slice 2: 🎯 Next (resume upload)
 - Feature Slice 3: ⏳ Pending
 
-### 3. Prepare Session Context
+### 3. Create Feature Branch
+**ALWAYS create a feature branch before starting work:**
+
+```bash
+# Make sure you're on main and up to date
+git checkout main
+git pull origin main
+
+# Create feature branch (naming convention: feature/slice-N-short-description)
+git checkout -b feature/slice-2-resume-upload
+
+# Verify you're on the new branch
+git branch --show-current
+```
+
+**Branch Naming Convention:**
+- `feature/slice-1-foundation`
+- `feature/slice-2-resume-upload`
+- `feature/slice-3-company-selection`
+- `feature/slice-N-descriptive-name`
+
+### 4. Prepare Session Context
 Have these files ready:
 - `BUILD-GUIDE.md` - Development patterns
 - `Ready2Intern-Implementation-Plan.md` - Feature requirements
 - `Ready2Intern-API-Spec.md` - API contracts
-- `PROJECT.md` - Current project state
+- `PROGRESS.md` - Current project state
 - `ISSUES.md` - Known issues
 
 ---
@@ -63,7 +84,7 @@ Have these files ready:
 I want to build [FEATURE NAME] for the Ready2Intern POC.
 
 CONTEXT:
-- Review PROJECT.md for what's been built so far
+- Review PROGRESS.md for what's been built so far
 - Review ISSUES.md for any known issues to avoid
 - Follow the vertical slices approach from BUILD-GUIDE.md
 
@@ -76,7 +97,7 @@ APPROACH:
 3. Frontend: Build UI component
 4. Integration: Connect frontend to backend
 5. Test end-to-end: Verify complete user flow
-6. Update PROJECT.md: Document what was built
+6. Update PROGRESS.md: Document what was built
 7. Log any issues in ISSUES.md
 
 ACCEPTANCE CRITERIA:
@@ -91,7 +112,7 @@ Please work through this step-by-step, showing your progress at each stage.
 I want to build the Resume Upload feature for the Ready2Intern POC.
 
 CONTEXT:
-- Review PROJECT.md for what's been built so far
+- Review PROGRESS.md for what's been built so far
 - Review ISSUES.md for any known issues to avoid
 - Follow the vertical slices approach from BUILD-GUIDE.md
 - Backend runs on localhost:8000
@@ -127,7 +148,7 @@ APPROACH:
 3. Frontend: Build FileDropzone component with drag & drop
 4. Integration: Connect component to /api/upload endpoint
 5. Test: Upload file from UI, verify success/error handling
-6. Update PROJECT.md with what was built
+6. Update PROGRESS.md with what was built
 7. Log any issues discovered in ISSUES.md
 
 ACCEPTANCE CRITERIA:
@@ -181,14 +202,21 @@ The agent should break down the feature into tasks and complete them sequentiall
 - **Acceptance:** All acceptance criteria met
 
 #### Task 6: Documentation
-- Update PROJECT.md
+- Update PROGRESS.md
 - Log any issues in ISSUES.md
 - **Acceptance:** Documentation updated
 
-#### Task 7: Commit
+#### Task 7: Commit & Push
 - Stage all changes
 - Commit with descriptive message
-- **Acceptance:** Feature committed to git
+- Push feature branch to remote
+- **Acceptance:** Feature committed and pushed to git
+
+#### Task 8: Create Pull Request
+- Create PR from feature branch to main
+- Add description with what was built
+- Link to acceptance criteria
+- **Acceptance:** PR created and ready for review
 
 ### Progress Checkpoints
 
@@ -206,7 +234,7 @@ Agent should report progress after each task:
 
 ## Project Tracking Files
 
-### PROJECT.md (Project State)
+### PROGRESS.md (Project State)
 
 **Purpose:** Living document that tracks what's been built and lessons learned
 
@@ -599,7 +627,7 @@ When logging new issues, use this format:
 
 ### ✅ Recommended Approach
 
-**Use PROJECT.md + ISSUES.md** - This is a GOOD approach because:
+**Use PROGRESS.md + ISSUES.md** - This is a GOOD approach because:
 
 1. **Context Preservation:** Each session can quickly understand project state
 2. **Knowledge Transfer:** Lessons learned are documented
@@ -624,7 +652,7 @@ When logging new issues, use this format:
 ```
 Session Start
     ↓
-Read PROJECT.md (what's built)
+Read PROGRESS.md (what's built)
     ↓
 Read ISSUES.md (what to avoid)
     ↓
@@ -634,11 +662,13 @@ Build Feature (tasks with acceptance criteria)
     ↓
 Test End-to-End
     ↓
-Update PROJECT.md (what was built + lessons)
+Update PROGRESS.md (what was built + lessons)
     ↓
 Update ISSUES.md (new issues found)
     ↓
-Commit Feature
+Commit & Push Feature Branch
+    ↓
+Create Pull Request
     ↓
 Session End
 ```
@@ -651,7 +681,7 @@ Before ending a session, agent should:
 
 - [ ] All acceptance criteria met
 - [ ] Feature tested end-to-end
-- [ ] PROJECT.md updated with:
+- [ ] PROGRESS.md updated with:
   - Feature marked complete
   - Key files listed
   - Lessons learned documented
@@ -660,6 +690,12 @@ Before ending a session, agent should:
   - Any new issues discovered
   - Any issues resolved
 - [ ] Code committed with clear message
+- [ ] Feature branch pushed to remote
+- [ ] Pull request created with:
+  - Clear title: "feat: [feature name] (slice N)"
+  - Description of what was built
+  - List of acceptance criteria met
+  - Link to relevant documentation
 - [ ] Next feature identified
 
 ---
@@ -668,7 +704,7 @@ Before ending a session, agent should:
 
 ### Session Start
 ```
-Agent: I've reviewed PROJECT.md and see that Feature Slice 1 (Foundation) 
+Agent: I've reviewed PROGRESS.md and see that Feature Slice 1 (Foundation) 
 is complete. I've also checked ISSUES.md and see one known issue about 
 file naming with special characters - I'll keep that in mind.
 
@@ -700,10 +736,13 @@ All acceptance criteria met:
 ✓ Error handling works
 
 I've updated:
-- PROJECT.md: Added Feature Slice 2 section with lessons learned
+- PROGRESS.md: Added Feature Slice 2 section with lessons learned
 - ISSUES.md: Logged Issue #1 about special characters in filenames
 
-Committed as: "feat: add resume upload feature (slice 2)"
+Git workflow completed:
+- Committed as: "feat: add resume upload feature (slice 2)"
+- Pushed to: feature/slice-2-resume-upload
+- Pull request created: #2
 
 Ready for Feature Slice 3: Company Selection in next session.
 ```
@@ -713,7 +752,7 @@ Ready for Feature Slice 3: Company Selection in next session.
 ## Tips for Effective Sessions
 
 ### 1. Start with Context
-Always have agent read PROJECT.md and ISSUES.md first
+Always have agent read PROGRESS.md and ISSUES.md first
 
 ### 2. One Feature at a Time
 Don't try to build multiple features in one session
@@ -722,7 +761,7 @@ Don't try to build multiple features in one session
 Don't wait until the end to test integration
 
 ### 4. Document Immediately
-Update PROJECT.md and ISSUES.md before committing
+Update PROGRESS.md and ISSUES.md before committing
 
 ### 5. Clear Acceptance Criteria
 Agent knows exactly when feature is "done"
@@ -735,12 +774,253 @@ Review ISSUES.md before starting to avoid known problems
 
 ---
 
+## Git Workflow for Feature Slices
+
+### Branch Strategy
+
+**Main Branch Protection:**
+- `main` branch contains only production-ready, tested code
+- Never commit directly to `main`
+- All features developed in feature branches
+- Features merged via pull requests after review
+
+**Feature Branch Lifecycle:**
+
+```
+main (protected)
+  ↓
+feature/slice-N-name (development)
+  ↓
+Pull Request (review)
+  ↓
+main (merge after approval)
+```
+
+### Step-by-Step Git Workflow
+
+#### 1. Before Starting Work
+
+```bash
+# Ensure main is up to date
+git checkout main
+git pull origin main
+
+# Create feature branch
+git checkout -b feature/slice-2-resume-upload
+
+# Verify branch
+git branch --show-current
+# Output: feature/slice-2-resume-upload
+```
+
+#### 2. During Development
+
+```bash
+# Make changes, test features...
+
+# Check status frequently
+git status
+
+# Stage changes incrementally
+git add backend/app/api/routes/upload.py
+git add frontend/src/components/FileDropzone.tsx
+
+# Or stage all at once (after testing)
+git add .
+```
+
+#### 3. Commit Changes
+
+```bash
+# Commit with descriptive message
+git commit -m "feat: add resume upload feature (slice 2)
+
+- Created FileDropzone component with drag & drop
+- Implemented /api/upload endpoint
+- Added file validation (PDF/DOCX, max 5MB)
+- Session ID generation with UUID
+- File storage in data/resumes/
+- Error handling for invalid files
+
+Acceptance criteria:
+✓ Drag & drop works
+✓ File validation working
+✓ Files save to data/resumes/
+✓ Session IDs generated
+✓ Error handling works"
+```
+
+**Commit Message Format:**
+```
+<type>: <short description> (slice N)
+
+<detailed description>
+- Bullet point 1
+- Bullet point 2
+
+Acceptance criteria:
+✓ Criterion 1
+✓ Criterion 2
+```
+
+**Types:**
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation only
+- `refactor:` - Code refactoring
+- `test:` - Adding tests
+- `chore:` - Maintenance tasks
+
+#### 4. Push Feature Branch
+
+```bash
+# Push to remote
+git push origin feature/slice-2-resume-upload
+
+# If first push, set upstream
+git push -u origin feature/slice-2-resume-upload
+```
+
+#### 5. Create Pull Request
+
+**Via GitHub CLI (recommended):**
+```bash
+gh pr create \
+  --title "feat: Resume Upload Feature (Slice 2)" \
+  --body "## Feature Slice 2: Resume Upload
+
+### What Was Built
+- FileDropzone component with drag & drop
+- Backend /api/upload endpoint
+- File validation (PDF/DOCX, max 5MB)
+- Session ID generation
+- File storage in data/resumes/
+
+### Acceptance Criteria
+- [x] Drag & drop works
+- [x] File validation working
+- [x] Files save to data/resumes/
+- [x] Session IDs generated
+- [x] Error handling works
+
+### Testing
+- Tested end-to-end upload flow
+- Verified file validation
+- Tested error cases
+
+### Documentation Updated
+- [x] PROGRESS.md updated
+- [x] ISSUES.md updated (if applicable)
+
+### Related
+- Implements Feature Slice 2 from Ready2Intern-Implementation-Plan.md
+- Follows API spec from Ready2Intern-API-Spec.md"
+```
+
+**Via GitHub Web Interface:**
+1. Go to repository on GitHub
+2. Click "Pull requests" → "New pull request"
+3. Select base: `main` ← compare: `feature/slice-2-resume-upload`
+4. Fill in title and description (use template above)
+5. Click "Create pull request"
+
+#### 6. After PR is Merged
+
+```bash
+# Switch back to main
+git checkout main
+
+# Pull latest changes (includes your merged feature)
+git pull origin main
+
+# Delete local feature branch (optional, keeps things clean)
+git branch -d feature/slice-2-resume-upload
+
+# Delete remote feature branch (optional)
+git push origin --delete feature/slice-2-resume-upload
+```
+
+### Pull Request Template
+
+```markdown
+## Feature Slice N: [Feature Name]
+
+### What Was Built
+- Component/endpoint 1
+- Component/endpoint 2
+- Feature 3
+
+### Acceptance Criteria
+- [x] Criterion 1
+- [x] Criterion 2
+- [x] Criterion 3
+
+### Testing
+- Describe testing performed
+- List test cases covered
+
+### Documentation Updated
+- [x] PROGRESS.md updated
+- [x] ISSUES.md updated (if applicable)
+- [x] README updated (if needed)
+
+### Screenshots (if UI changes)
+[Add screenshots here]
+
+### Related
+- Implements Feature Slice N from Ready2Intern-Implementation-Plan.md
+- Addresses Issue #X (if applicable)
+```
+
+### Branch Naming Examples
+
+```
+feature/slice-1-foundation
+feature/slice-2-resume-upload
+feature/slice-3-company-selection
+feature/slice-4-role-description
+feature/slice-5-analyze-button
+feature/slice-6-llm-resume-analysis
+feature/slice-7-llm-role-matching
+feature/slice-8-llm-gap-analysis
+feature/slice-9-llm-timeline
+feature/slice-10-results-overall-score
+feature/slice-11-results-score-breakdown
+feature/slice-12-results-strengths-gaps
+feature/slice-13-results-timeline
+feature/slice-14-pdf-export
+feature/slice-15-error-handling-polish
+```
+
+### Quick Reference
+
+```bash
+# Start new feature
+git checkout main && git pull origin main
+git checkout -b feature/slice-N-name
+
+# During work
+git status
+git add .
+git commit -m "feat: description (slice N)"
+
+# Finish feature
+git push origin feature/slice-N-name
+gh pr create --title "feat: Feature Name (Slice N)" --body "..."
+
+# After merge
+git checkout main && git pull origin main
+git branch -d feature/slice-N-name
+```
+
+---
+
 ## Summary
 
 **Best Practice:**
 - One feature slice per session
 - Work task-by-task with acceptance criteria
-- Maintain PROJECT.md for state
+- Maintain PROGRESS.md for state
 - Maintain ISSUES.md for problems
 - Test end-to-end before committing
 - Document lessons learned
