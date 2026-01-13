@@ -38,26 +38,26 @@
 ## Week 2: Resume Upload & Company Selection
 
 ### Resume Upload - Frontend
-- [ ] Create FileDropzone component
-- [ ] Add drag-and-drop event handlers
-- [ ] Implement click-to-upload fallback
-- [ ] Add file type validation (PDF, DOCX only)
-- [ ] Add file size validation (max 5MB)
-- [ ] Build upload progress indicator component
-- [ ] Create success/error toast notifications
-- [ ] Add file preview display after upload
-- [ ] Store session_id in React state/context
-- [ ] Handle upload errors with user-friendly messages
+- [x] Create FileDropzone component
+- [x] Add drag-and-drop event handlers
+- [x] Implement click-to-upload fallback
+- [x] Add file type validation (PDF, DOCX only)
+- [x] Add file size validation (max 5MB)
+- [x] Build upload progress indicator component
+- [x] Create success/error toast notifications
+- [x] Add file preview display after upload
+- [x] Store session_id in React state/context
+- [x] Handle upload errors with user-friendly messages
 
 ### Resume Upload - Backend
-- [ ] Create POST /api/upload endpoint
-- [ ] Implement file validation middleware
-- [ ] Generate unique session IDs (UUID)
-- [ ] Save uploaded files to data/resumes/ with naming convention
-- [ ] Return file metadata response (filename, size, session_id)
-- [ ] Add error handling for invalid files
-- [ ] Implement file cleanup on validation failure
-- [ ] Add file size limits to endpoint
+- [x] Create POST /api/upload endpoint
+- [x] Implement file validation middleware
+- [x] Generate unique session IDs (UUID)
+- [x] Save uploaded files to data/resumes/ with naming convention
+- [x] Return file metadata response (filename, size, session_id)
+- [x] Add error handling for invalid files
+- [x] Implement file cleanup on validation failure
+- [x] Add file size limits to endpoint
 
 ### Company Selection - Frontend
 - [ ] Download company logos (Amazon, Meta, Google)
@@ -79,11 +79,11 @@
 - [ ] Return company list with metadata
 
 ### Integration & Testing
-- [ ] Test end-to-end resume upload flow
-- [ ] Verify files persist in data/resumes/
+- [x] Test end-to-end resume upload flow
+- [x] Verify files persist in data/resumes/
 - [ ] Test company selection UI interaction
-- [ ] Verify session management works
-- [ ] Test error handling for invalid uploads
+- [x] Verify session management works
+- [x] Test error handling for invalid uploads
 
 ---
 
