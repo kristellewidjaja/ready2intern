@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FileDropzone } from '../components/FileDropzone';
+import type { UploadResponse } from '../types/upload';
 
 interface HealthStatus {
   status: string;
@@ -11,6 +13,7 @@ export const Dashboard = () => {
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -30,6 +33,11 @@ export const Dashboard = () => {
 
     checkHealth();
   }, []);
+
+  const handleUploadSuccess = (response: UploadResponse) => {
+    setSessionId(response.session_id);
+    console.log('Upload successful:', response);
+  };
 
   return (
     <div className="space-y-8">
@@ -79,6 +87,14 @@ export const Dashboard = () => {
         )}
       </div>
 
+      {/* Resume Upload Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Upload Resume
+        </h3>
+        <FileDropzone onUploadSuccess={handleUploadSuccess} />
+      </div>
+
       <div className="grid md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="text-primary-500 mb-3">
@@ -87,10 +103,10 @@ export const Dashboard = () => {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Upload Resume
+            1. Upload Resume
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Upload your resume in PDF or DOCX format for analysis
+            {sessionId ? '✓ Resume uploaded' : 'Upload your resume in PDF or DOCX format'}
           </p>
         </div>
 
@@ -101,10 +117,10 @@ export const Dashboard = () => {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Select Company
+            2. Select Company
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Choose your target company: Amazon, Meta, or Google
+            Choose your target company (Coming soon)
           </p>
         </div>
 
@@ -115,10 +131,10 @@ export const Dashboard = () => {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Get Analysis
+            3. Get Analysis
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Receive AI-powered insights and recommendations
+            Receive AI-powered insights (Coming soon)
           </p>
         </div>
       </div>
