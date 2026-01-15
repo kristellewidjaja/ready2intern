@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import logging
 
-from app.api.routes import health, upload, companies
+from app.api.routes import health, upload, companies, analyze
 
 # Load environment variables
 load_dotenv()
@@ -42,6 +42,7 @@ app.add_middleware(
 app.include_router(health.router, prefix="/api", tags=["health"])
 app.include_router(upload.router, prefix="/api", tags=["upload"])
 app.include_router(companies.router, prefix="/api", tags=["companies"])
+app.include_router(analyze.router, prefix="/api", tags=["analyze"])
 
 @app.on_event("startup")
 async def startup_event():
