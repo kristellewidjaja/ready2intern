@@ -166,15 +166,50 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 2)
+### Current Status (Week 3)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
 - ✅ Theme toggle (light/dark mode)
 - ✅ Resume upload (drag-and-drop, validation, session management)
 - ✅ Company selection (logos, tenets, API endpoint)
+- ✅ Role description input (textarea, validation, character counter)
 
 ## Implementation Notes
+
+### Week 3 - Role Description Input (Completed Jan 14, 2026)
+
+**Key Decisions:**
+- Real-time validation with visual feedback (color-coded borders)
+- Character counter with contextual messages ("X more needed")
+- Progressive disclosure: appears after company selection
+- Backend validation models ready for future analyze endpoint
+- Pydantic validators for robust input validation
+
+**Components Created:**
+- RoleDescriptionInput: Controlled textarea component with validation
+- AnalysisRequest: Pydantic model with field validators
+
+**Reusable Patterns:**
+- Controlled component with external state management
+- Real-time validation with dynamic styling
+- Character counter with min/max limits
+- Contextual error messages (too short vs too long)
+- Success indicators for valid input
+- Pydantic field validators for backend validation
+
+**Common Pitfalls:**
+- Need to trim whitespace before validation
+- Character counter should update on every keystroke
+- Error messages should be specific and actionable
+- Border colors must have sufficient contrast in dark mode
+- Placeholder text should include realistic example
+
+**Testing Approach:**
+- Backend: 11 tests for validation models (min/max length, company validation)
+- Frontend: Placeholder tests for future implementation
+- Manual testing: Verify real-time validation, character counter, visual feedback
+- All 35 backend tests passing
 
 ### Week 2 - Company Selection (Completed Jan 13, 2026)
 
