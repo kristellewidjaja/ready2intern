@@ -29,6 +29,11 @@ Create `backend/.env`:
 ```
 ANTHROPIC_API_KEY=your_key_here
 CORS_ORIGINS=["http://localhost:5173"]
+
+# Optional LLM Configuration
+ANTHROPIC_MODEL=claude-3-5-sonnet-20241022  # Default model
+LLM_MAX_RETRIES=3                            # Max retry attempts
+LLM_RETRY_DELAY=1                            # Base delay in seconds
 ```
 
 ## Code Style
@@ -166,7 +171,7 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 3)
+### Current Status (Week 4)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
@@ -175,8 +180,86 @@ Track implementation status in this file using:
 - ✅ Company selection (logos, tenets, API endpoint)
 - ✅ Role description input (textarea, validation, character counter)
 - ✅ Analyze button (loading states, progress messages, API integration)
+- ✅ LLM integration (Anthropic Claude API, resume parsing, structured extraction)
 
 ## Implementation Notes
+
+### Week 4 - LLM Resume Analysis (Completed Jan 15, 2026)
+
+**Key Decisions:**
+- Lazy initialization of LLM service to avoid requiring API key at import time
+- Comprehensive retry logic with exponential backoff for API failures
+- Structured JSON prompt for consistent LLM responses
+- Separate services for LLM client, resume parsing, and analysis orchestration
+- Support for both PDF and DOCX resume formats
+- Extensive error handling and logging throughout the pipeline
+
+**Services Created:**
+- LLMService: Anthropic Claude API client with retry logic (`app/services/llm_service.py`)
+- ResumeParser: PDF/DOCX text extraction (`app/services/resume_parser.py`)
+- ResumeAnalysisService: Orchestrates parsing + LLM analysis (`app/services/resume_analysis_service.py`)
+- Prompt templates: Structured prompts for resume analysis (`app/prompts/resume_analysis.py`)
+
+**Reusable Patterns:**
+- Lazy service initialization: Avoid requiring env vars at module import time
+- Retry with exponential backoff: Handle rate limits and transient failures gracefully
+- Structured JSON prompts: Get consistent, parseable responses from LLM
+- Service layer separation: LLM client, parser, and orchestrator as separate concerns
+- Comprehensive error handling: Catch and log errors at each step
+- File system persistence: Save analysis results as JSON for later retrieval
+- Mock-friendly architecture: Services can be easily mocked for testing
+
+**Common Pitfalls:**
+- Don't initialize LLM service at module level (requires API key)
+- LLM responses may include markdown code blocks - strip them before parsing
+- PDF extraction can fail for image-based PDFs - handle gracefully
+- API errors need proper exception types with required parameters
+- Always validate LLM response structure and provide defaults for missing fields
+- Use lower temperature (0.3) for structured extraction vs creative tasks
+
+**Testing Approach:**
+- Backend: 75 total tests passing (24 new tests for LLM features)
+- Unit tests for LLM service (retry logic, error handling, API mocking)
+- Unit tests for resume parser (PDF, DOCX, error cases)
+- Unit tests for analysis service (orchestration, JSON parsing, file I/O)
+- Integration tests for analyze endpoint (mocked LLM service)
+- Manual E2E test script available (`test_e2e_manual.py`)
+
+**LLM Integration Details:**
+- Model: Claude 3.5 Sonnet (claude-3-5-sonnet-20241022) - configurable via `ANTHROPIC_MODEL`
+- Max retries: 3 attempts with exponential backoff (1s, 2s, 4s) - configurable via `LLM_MAX_RETRIES`
+- Retry delay: 1 second base delay - configurable via `LLM_RETRY_DELAY`
+- Default max tokens: 4096
+- Temperature: 0.3 for structured extraction (lower = more consistent)
+- Handles: RateLimitError, APITimeoutError, APIError, generic exceptions
+- Output: Structured JSON with personal info, education, skills, experience, projects, certifications, awards, summary
+
+**Available Claude Models:**
+- `claude-3-5-sonnet-20241022` (recommended, default) - Best balance of speed and quality
+- `claude-3-5-haiku-20241022` - Faster and cheaper, good for simple resumes
+- `claude-3-opus-20240229` - Highest quality, slower and more expensive
+
+**File Structure:**
+```
+backend/app/
+├── services/
+│   ├── llm_service.py              # Claude API client
+│   ├── resume_parser.py            # PDF/DOCX extraction
+│   └── resume_analysis_service.py  # Orchestration
+├── prompts/
+│   └── resume_analysis.py          # LLM prompt templates
+└── api/routes/
+    └── analyze.py                  # Updated with LLM integration
+```
+
+**Data Flow:**
+1. User uploads resume → saved to `data/resumes/{session_id}_{timestamp}.{ext}`
+2. User clicks analyze → POST /api/analyze
+3. ResumeParser extracts text from PDF/DOCX
+4. LLMService sends text to Claude with structured prompt
+5. Response parsed into JSON with validation and defaults
+6. Results saved to `data/sessions/{session_id}/resume_analysis.json`
+7. Success response returned to frontend
 
 ### Week 3 - Analyze Button & Loading State (Completed Jan 14, 2026)
 

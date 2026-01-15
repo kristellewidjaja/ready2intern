@@ -1,12 +1,12 @@
 # Ready2Intern POC - Issues
 
-**Last Updated:** January 13, 2026
+**Last Updated:** January 15, 2026
 
 ---
 
 ## Active Issues
 
-_No active issues. Feature Slice 3 completed successfully._
+_No active issues. Feature Slice 6 completed successfully._
 
 ---
 
@@ -47,6 +47,23 @@ Using deprecated `@app.on_event("startup")` and `@app.on_event("shutdown")` deco
 - Refactor to use lifespan context manager
 - Update main.py to use modern pattern
 - Reference: https://fastapi.tiangolo.com/advanced/events/
+
+**Assigned To:** Future cleanup (not blocking POC)
+
+---
+
+#### TD-3: PyPDF2 Deprecation Warning
+**Added:** January 15, 2026 (Feature Slice 6)
+**Priority:** Low
+
+**Description:**
+Using deprecated PyPDF2 library. The library maintainers recommend migrating to pypdf instead.
+
+**Action Items:**
+- Replace `PyPDF2` with `pypdf` in requirements.txt
+- Update import statement in resume_parser.py: `from pypdf import PdfReader`
+- Test PDF extraction still works correctly
+- Update documentation
 
 **Assigned To:** Future cleanup (not blocking POC)
 
