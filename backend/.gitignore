@@ -29,3 +29,6 @@ htmlcov/
 
 # Logs
 *.log
+
+CONFIGURATION.md
+MANUAL_TEST.md

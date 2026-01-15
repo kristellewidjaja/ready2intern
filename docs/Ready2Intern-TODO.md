@@ -133,23 +133,23 @@
 ## Week 4: LLM Integration (Resume & Role Matching)
 
 ### LLM Setup
-- [ ] Install Anthropic SDK
-- [ ] Configure API key in environment variables
-- [ ] Create LLM service class/module
-- [ ] Implement retry logic for API failures
-- [ ] Add timeout handling
-- [ ] Create prompt template utilities
+- [x] Install Anthropic SDK
+- [x] Configure API key in environment variables
+- [x] Create LLM service class/module
+- [x] Implement retry logic for API failures
+- [x] Add timeout handling
+- [x] Create prompt template utilities
 
 ### Resume Analysis - Backend
-- [ ] Create resume parsing service
-- [ ] Implement PDF text extraction (PyPDF2 or pdfplumber)
-- [ ] Implement DOCX text extraction (python-docx)
-- [ ] Create resume analysis prompt template
-- [ ] Call Claude API with resume text
-- [ ] Parse LLM response into structured format
-- [ ] Extract: skills, experience, education, projects
-- [ ] Save results to data/sessions/{session_id}/resume_analysis.json
-- [ ] Add error handling for parsing failures
+- [x] Create resume parsing service
+- [x] Implement PDF text extraction (PyPDF2 or pdfplumber)
+- [x] Implement DOCX text extraction (python-docx)
+- [x] Create resume analysis prompt template
+- [x] Call Claude API with resume text
+- [x] Parse LLM response into structured format
+- [x] Extract: skills, experience, education, projects
+- [x] Save results to data/sessions/{session_id}/resume_analysis.json
+- [x] Add error handling for parsing failures
 
 ### Role Matching - Backend
 - [ ] Create role matching service
@@ -165,12 +165,12 @@
 - [ ] Add detailed explanations for each score
 
 ### Integration & Testing
-- [ ] Test resume file reading from file system
-- [ ] Verify Claude API calls succeed
-- [ ] Test resume data extraction accuracy
+- [x] Test resume file reading from file system
+- [x] Verify Claude API calls succeed
+- [x] Test resume data extraction accuracy
 - [ ] Verify match scores are calculated correctly
-- [ ] Test error handling for API failures
-- [ ] Verify all results saved to file system
+- [x] Test error handling for API failures
+- [x] Verify all results saved to file system
 
 ---
 
