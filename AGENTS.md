@@ -172,8 +172,44 @@ Track implementation status in this file using:
 - ✅ Health check endpoint
 - ✅ Theme toggle (light/dark mode)
 - ✅ Resume upload (drag-and-drop, validation, session management)
+- ✅ Company selection (logos, tenets, API endpoint)
 
 ## Implementation Notes
+
+### Week 2 - Company Selection (Completed Jan 13, 2026)
+
+**Key Decisions:**
+- Company tenets stored as plain text files (easy to edit, LLM-friendly)
+- SVG logos for scalability and small file size
+- Company data configured in service layer (not database)
+- Progressive disclosure: company selector appears after resume upload
+- Dynamic styling with company brand colors
+
+**Services Created:**
+- Company selection endpoint: `/api/companies` (GET)
+- CompanyService: Company data management and tenets loading (`app/services/company_service.py`)
+- Company models: Pydantic schemas for API responses (`app/models/company.py`)
+
+**Reusable Patterns:**
+- Service layer pattern: CompanyService encapsulates business logic
+- Configuration as data: Company list in service, easy to extend
+- Progressive disclosure: Show features as user progresses through flow
+- Dynamic theming: Apply company colors programmatically
+- Controlled components: CompanyLogoSelector accepts props for state management
+- SVG graphics: Lightweight, scalable logos with brand colors
+
+**Common Pitfalls:**
+- Company tenets files must exist in `data/company-tenets/` directory
+- Logo paths must match frontend public directory structure
+- Company IDs must be lowercase and match across service/tenets/logos
+- Conditional rendering: Check session state before showing company selector
+- Color contrast: Ensure company colors meet accessibility standards
+
+**Testing Approach:**
+- Backend: 14 tests for companies endpoint and service
+- Frontend: Placeholder tests with TESTING.md guide for future setup
+- Manual testing: Verify UI interaction, API integration, responsive design
+- End-to-end: Test full flow from resume upload → company selection
 
 ### Week 1 - Foundation (Completed Jan 13, 2026)
 

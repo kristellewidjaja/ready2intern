@@ -2,7 +2,7 @@
  * API service for backend communication
  */
 import axios from 'axios';
-import type { UploadResponse } from '../types/upload';
+import type { UploadResponse, CompaniesResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -43,5 +43,13 @@ export const uploadResume = async (
  */
 export const checkHealth = async () => {
   const response = await api.get('/api/health');
+  return response.data;
+};
+
+/**
+ * Fetch available companies
+ */
+export const fetchCompanies = async (): Promise<CompaniesResponse> => {
+  const response = await api.get<CompaniesResponse>('/api/companies');
   return response.data;
 };

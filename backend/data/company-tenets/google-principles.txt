@@ -1,0 +1,142 @@
+Google's Evaluation Principles and Cultural Values
+
+Google evaluates candidates, including interns, based on a combination of technical excellence, "Googleyness," and alignment with company values. These principles guide how Google assesses fit and potential.
+
+Core Principles:
+
+1. Focus on the User
+Everything we do starts with the user. We build products that people love and that make their lives better. User experience is paramount.
+
+For interns: Demonstrate user-centric design, usability testing, understanding of user needs, and focus on creating delightful experiences.
+
+2. Think 10x, Not 10%
+We aim for breakthrough innovations, not incremental improvements. We encourage moonshot thinking and ambitious goals that can change the world.
+
+For interns: Show ambitious projects, innovative thinking, willingness to tackle big problems, and creative solutions that go beyond obvious approaches.
+
+3. Bet on Technical Insights
+We believe that technical innovation is the foundation of great products. Deep technical understanding leads to breakthrough solutions.
+
+For interns: Demonstrate strong technical fundamentals, deep understanding of computer science concepts, algorithmic thinking, and ability to apply technical knowledge creatively.
+
+4. Ship and Iterate
+We launch products and learn from real-world usage. We believe in getting things out there, gathering feedback, and continuously improving.
+
+For interns: Show completed projects, iterative development, incorporating feedback, and comfort with launching and learning.
+
+5. Give Users What They Want Before They Know They Want It
+We anticipate user needs and build products that solve problems users didn't know they had.
+
+For interns: Demonstrate innovative thinking, understanding of user behavior, predictive problem-solving, and ability to identify unmet needs.
+
+6. Be Data-Driven
+We make decisions based on data and evidence, not opinions or intuition. We measure everything and let the data guide us.
+
+For interns: Show use of analytics, A/B testing, metrics-driven development, and ability to analyze and interpret data to inform decisions.
+
+7. Collaborate and Innovate
+Great ideas come from collaboration. We work together across teams and disciplines to build the best solutions.
+
+For interns: Demonstrate teamwork, cross-functional collaboration, open communication, and ability to work effectively with diverse teams.
+
+8. Aim for Simplicity
+We strive to make complex things simple and accessible. The best solutions are often the simplest ones.
+
+For interns: Show ability to simplify complex problems, clean code, intuitive interfaces, and focus on essential features over feature bloat.
+
+---
+
+"Googleyness" - Cultural Fit:
+
+Googleyness is Google's term for cultural fit. It encompasses several key attributes:
+
+1. Comfort with Ambiguity
+Ability to thrive in uncertain situations and adapt to changing requirements. Comfortable with open-ended problems.
+
+2. Intellectual Humility
+Willingness to admit when you're wrong, learn from others, and recognize that you don't have all the answers.
+
+3. Collaborative Spirit
+Genuine enjoyment of working with others, sharing credit, and helping teammates succeed.
+
+4. Conscientiousness
+Taking responsibility for your work, following through on commitments, and maintaining high standards.
+
+5. Courage and Resilience
+Willingness to take risks, speak up with ideas, and bounce back from failures.
+
+6. Fun and Passion
+Enthusiasm for your work, sense of humor, and ability to make work enjoyable for yourself and others.
+
+---
+
+Technical Excellence at Google:
+
+Google places extremely high value on technical skills:
+
+- Algorithms and Data Structures: Deep understanding and ability to apply them
+- System Design: Ability to design scalable, efficient systems
+- Code Quality: Clean, efficient, well-documented code
+- Problem Solving: Creative and analytical thinking
+- Computer Science Fundamentals: Strong foundation in CS concepts
+- Learning Ability: Quick to master new technologies and concepts
+
+---
+
+Google's Values:
+
+1. Respect the User, Respect the Opportunity
+Treat users' time, attention, and data with respect. Build products that are worthy of their trust.
+
+2. Respect Each Other
+Treat colleagues with respect, regardless of role or level. Value diverse perspectives and inclusive collaboration.
+
+3. Take Action
+Don't just identify problems—solve them. Be proactive and take ownership.
+
+4. Serve Our Users, Not Ourselves
+Put user needs above personal or team preferences. Make decisions that benefit users, even if they're harder for us.
+
+5. Support Googlers and Their Loved Ones
+Care about the wellbeing of colleagues and create an environment where people can thrive.
+
+6. Do the Right Thing
+Act with integrity, even when it's difficult. Consider ethical implications of our work.
+
+---
+
+Evaluation Notes for Internship Candidates:
+
+When evaluating resumes and experiences against Google's principles, look for:
+
+- Focus on the User: User research, usability testing, user-centric design, accessibility considerations
+- Think 10x: Ambitious projects, innovative solutions, breakthrough thinking, not just incremental improvements
+- Bet on Technical Insights: Strong CS fundamentals, algorithmic solutions, technical depth, optimization work
+- Ship and Iterate: Completed projects, iterative development, MVP approach, continuous improvement
+- Anticipate User Needs: Innovative features, predictive solutions, understanding of user psychology
+- Be Data-Driven: Use of analytics, metrics, A/B testing, data analysis in projects
+- Collaborate and Innovate: Team projects, cross-functional work, open source contributions
+- Aim for Simplicity: Clean code, simple interfaces, elegant solutions to complex problems
+
+Googleyness Indicators:
+- Comfort with Ambiguity: Open-ended projects, self-directed learning, adaptability
+- Intellectual Humility: Learning from failures, crediting others, acknowledging limitations
+- Collaborative Spirit: Team projects, helping others, sharing knowledge
+- Conscientiousness: Completed projects, attention to detail, reliability
+- Courage and Resilience: Ambitious projects, recovering from failures, taking risks
+- Fun and Passion: Interesting side projects, enthusiasm in descriptions, creative pursuits
+
+For Software Engineering Intern roles (STEP program), focus especially on:
+- Strong technical fundamentals (algorithms, data structures, system design)
+- Googleyness (cultural fit indicators)
+- User focus and impact
+- Collaborative and learning mindset
+- Code quality and problem-solving ability
+
+Key Differentiators:
+- Google values technical depth and CS fundamentals more than most companies
+- Googleyness (cultural fit) is weighted heavily in hiring decisions
+- 10x thinking and ambitious goals are encouraged
+- Data-driven decision making is essential
+- Simplicity and user focus are paramount
+- Intellectual humility and collaboration are highly valued
