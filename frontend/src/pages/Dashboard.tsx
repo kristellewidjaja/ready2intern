@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FileDropzone } from '../components/FileDropzone';
+import { CompanyLogoSelector } from '../components/CompanyLogoSelector';
 import type { UploadResponse } from '../types/upload';
 
 interface HealthStatus {
@@ -14,6 +15,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -37,6 +39,11 @@ export const Dashboard = () => {
   const handleUploadSuccess = (response: UploadResponse) => {
     setSessionId(response.session_id);
     console.log('Upload successful:', response);
+  };
+
+  const handleCompanySelect = (companyId: string) => {
+    setSelectedCompany(companyId);
+    console.log('Company selected:', companyId);
   };
 
   return (
@@ -90,11 +97,22 @@ export const Dashboard = () => {
       {/* Resume Upload Section */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Upload Resume
+          Step 1: Upload Resume
         </h3>
         <FileDropzone onUploadSuccess={handleUploadSuccess} />
       </div>
 
+      {/* Company Selection Section */}
+      {sessionId && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <CompanyLogoSelector
+            selectedCompany={selectedCompany}
+            onCompanySelect={handleCompanySelect}
+          />
+        </div>
+      )}
+
+      {/* Progress Steps */}
       <div className="grid md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="text-primary-500 mb-3">
@@ -120,7 +138,7 @@ export const Dashboard = () => {
             2. Select Company
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Choose your target company (Coming soon)
+            {selectedCompany ? '✓ Company selected' : 'Choose your target company'}
           </p>
         </div>
 
