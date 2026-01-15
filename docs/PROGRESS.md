@@ -2,7 +2,7 @@
 
 **Last Updated:** January 15, 2026
 **Current Sprint:** Week 5
-**Completed Features:** 8/15
+**Completed Features:** 9/15
 
 ---
 
@@ -109,6 +109,44 @@ Integration:
 3. Specific resources (courses, tutorials, projects) more valuable than generic advice
 4. Project ideas with features and technologies help candidates build portfolio
 5. Quick wins provide immediate confidence boost and momentum
+
+---
+
+### ✅ Feature Slice 9: LLM Timeline Generation (Week 5)
+**Completed:** January 15, 2026
+
+**What Was Built:**
+
+Backend:
+- TimelineService for orchestrating timeline generation
+- Comprehensive prompt templates with phase-based structure
+- Dynamic timeline calculation based on target deadline (defaults to 12 weeks)
+- Adaptive intensity levels: Light (12 hrs/week), Moderate (15 hrs/week), Intensive (20 hrs/week)
+- Four-phase structure: Foundation, Core Skills, Experience Building, Polish
+- Task dependency tracking with critical path identification
+- Weekly breakdown with specific deliverables
+- Milestones with completion criteria
+- Flexibility notes and motivation tips
+- 29 new unit tests, all passing (155 total tests)
+
+Integration:
+- Updated analyze endpoint to perform four-phase analysis
+- Phase 1: Resume parsing and data extraction
+- Phase 2: Role matching with scoring
+- Phase 3: Gap analysis with recommendations
+- Phase 4: Timeline generation with phases and tasks
+- Results saved to `data/sessions/{session_id}/timeline.json`
+- Complete analysis in 40-100 seconds (all four phases)
+
+**Key Lessons Learned:**
+1. Timeline must adapt to available time - short deadlines require intensive focus
+2. Task dependencies ensure logical progression through learning path
+3. Weekly breakdown makes long-term goals feel achievable
+4. Critical path identifies must-complete tasks vs nice-to-haves
+5. Flexibility notes help candidates adjust when timeline is too aggressive
+6. Motivation tips address common challenges (procrastination, overwhelm, burnout)
+7. Phases provide clear structure: quick wins → core skills → experience → polish
+8. Milestones create checkpoints for measuring progress
 6. Phased action plan helps candidates organize their preparation
 7. Gap IDs enable cross-referencing between gaps and action items
 8. Validation recalculates counts to ensure consistency

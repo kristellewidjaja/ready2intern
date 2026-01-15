@@ -183,8 +183,113 @@ Track implementation status in this file using:
 - ✅ LLM integration (Anthropic Claude API, resume parsing, structured extraction)
 - ✅ Role matching (ATS, Role Match, Company Fit scores with weighted overall score)
 - ✅ Gap analysis (technical, experience, company fit, resume gaps with recommendations)
+- ✅ Timeline generation (personalized development timeline with phases, tasks, milestones)
 
 ## Implementation Notes
+
+### Week 5 - LLM Timeline Generation (Completed Jan 15, 2026)
+
+**Key Decisions:**
+- Four-phase timeline structure: Foundation (weeks 1-2), Core Skills (weeks 3-6), Experience Building (weeks 7-10), Polish (weeks 11+)
+- Dynamic timeline calculation based on target deadline (defaults to 12 weeks)
+- Adaptive intensity levels: Light (12 hrs/week), Moderate (15 hrs/week), Intensive (20 hrs/week)
+- Task dependency tracking with critical path identification
+- Weekly breakdown with specific deliverables for each week
+- Flexibility notes for adjusting timeline if too aggressive
+- Motivation tips to maintain momentum
+
+**Services Created:**
+- TimelineService: Orchestrates timeline generation (`app/services/timeline_service.py`)
+- Timeline prompts: Comprehensive templates with phase structure (`app/prompts/timeline_generation.py`)
+- Timeline models: Pydantic schemas for all timeline components (`app/models/timeline.py`)
+
+**Reusable Patterns:**
+- Dynamic timeline calculation based on available time
+- Adaptive intensity based on deadline urgency
+- Task dependency and critical path tracking
+- Weekly breakdown for actionable planning
+- Flexibility and motivation guidance
+- Lazy service initialization pattern (continued from previous features)
+
+**Common Pitfalls:**
+- Large token limit needed (16K) for comprehensive timeline
+- Timeline must respect target deadline constraints
+- Task dependencies must reference valid task IDs
+- Weekly breakdown must cover all weeks from start to deadline
+- Total hours should be realistic (not overcommit)
+- Critical path should include 5-10 most important tasks
+- Temperature slightly higher (0.4) for creative planning
+- Phases should be sequential and not overlap
+
+**Testing Approach:**
+- Backend: 155 total tests passing (126 original + 29 new)
+- 15 timeline service tests (generation, parsing, validation, file I/O)
+- 15 timeline model tests (all Pydantic models)
+- Updated analyze endpoint tests to mock all four services
+- Timeline calculation tests with different deadline scenarios
+- Intensity level tests (light, moderate, intensive)
+- JSON parsing tests with markdown and invalid responses
+
+**Timeline Structure:**
+
+Metadata:
+- Total weeks, total hours, hours per week
+- Start date and target deadline
+- Intensity level (light, moderate, intensive)
+- Feasibility assessment
+
+Phases:
+- Phase ID, number, title, description
+- Start/end weeks
+- Focus areas
+- Tasks with dependencies and resources
+- Milestones with completion criteria
+- Success metrics
+
+Weekly Breakdown:
+- Week number, start/end dates
+- Phase and focus for the week
+- Specific tasks to complete
+- Estimated hours
+- Key deliverable
+
+Additional:
+- Critical path (must-complete tasks)
+- Flexibility notes (what can be adjusted)
+- Motivation tips (staying on track)
+
+**File Structure:**
+```
+backend/app/
+├── services/
+│   └── timeline_service.py        # Timeline generation orchestration
+├── prompts/
+│   └── timeline_generation.py     # Timeline prompts and templates
+├── models/
+│   └── timeline.py                # Pydantic models for timeline
+└── api/routes/
+    └── analyze.py                 # Updated with four-phase analysis
+```
+
+**Data Flow:**
+1. Resume analysis completes → results saved
+2. Role matching completes → results saved
+3. Gap analysis completes → results saved
+4. TimelineService loads gap analysis
+5. Service calculates timeline parameters (weeks, hours/week)
+6. Determines intensity level based on deadline urgency
+7. Combined with role description and gap data
+8. LLM generates timeline with phases, tasks, milestones
+9. Creates weekly breakdown for actionable planning
+10. Identifies critical path and flexibility notes
+11. Validation ensures timeline is realistic
+12. Results saved to `data/sessions/{session_id}/timeline.json`
+
+**Performance:**
+- Timeline generation time: 10-30 seconds (after gap analysis)
+- Total analysis time: 40-100 seconds (resume + matching + gaps + timeline)
+- Token usage: ~10,000-14,000 tokens per complete analysis
+- Cost: ~$0.08-0.12 per complete analysis (all four phases)
 
 ### Week 5 - LLM Gap Analysis (Completed Jan 15, 2026)
 
