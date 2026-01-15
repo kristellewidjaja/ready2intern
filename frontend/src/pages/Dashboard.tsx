@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FileDropzone } from '../components/FileDropzone';
 import { CompanyLogoSelector } from '../components/CompanyLogoSelector';
 import { RoleDescriptionInput } from '../components/RoleDescriptionInput';
+import { AnalyzeButton } from '../components/AnalyzeButton';
+import { analyzeResume } from '../services/api';
 import type { UploadResponse } from '../types/upload';
 
 interface HealthStatus {
@@ -50,6 +52,29 @@ export const Dashboard = () => {
 
   const handleRoleDescriptionChange = (value: string) => {
     setRoleDescription(value);
+  };
+
+  const handleAnalyze = async () => {
+    if (!sessionId || !selectedCompany) {
+      console.error('Missing required fields');
+      return;
+    }
+
+    try {
+      const response = await analyzeResume({
+        session_id: sessionId,
+        company: selectedCompany,
+        role_description: roleDescription,
+      });
+
+      console.log('Analysis started:', response);
+      alert(`Analysis started! Analysis ID: ${response.analysis_id}\n\n${response.message}`);
+      
+      // TODO: Navigate to results page in future feature slice
+    } catch (err) {
+      console.error('Analysis failed:', err);
+      alert('Failed to start analysis. Please try again.');
+    }
   };
 
   return (
@@ -127,6 +152,21 @@ export const Dashboard = () => {
           <RoleDescriptionInput
             value={roleDescription}
             onChange={handleRoleDescriptionChange}
+          />
+        </div>
+      )}
+
+      {/* Analyze Button Section */}
+      {sessionId && selectedCompany && roleDescription.length > 0 && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            Step 4: Start Analysis
+          </h3>
+          <AnalyzeButton
+            sessionId={sessionId}
+            company={selectedCompany}
+            roleDescription={roleDescription}
+            onAnalyze={handleAnalyze}
           />
         </div>
       )}

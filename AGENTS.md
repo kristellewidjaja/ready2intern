@@ -174,8 +174,42 @@ Track implementation status in this file using:
 - ✅ Resume upload (drag-and-drop, validation, session management)
 - ✅ Company selection (logos, tenets, API endpoint)
 - ✅ Role description input (textarea, validation, character counter)
+- ✅ Analyze button (loading states, progress messages, API integration)
 
 ## Implementation Notes
+
+### Week 3 - Analyze Button & Loading State (Completed Jan 14, 2026)
+
+**Key Decisions:**
+- Smart button state: shows what's missing vs generic "disabled"
+- Progress messages during loading to keep users engaged
+- Stub endpoint allows frontend development without blocking
+- Session directory creation prepares for future LLM results
+- Alert for now, will add results page navigation in future
+
+**Components Created:**
+- AnalyzeButton: Smart button with loading states and validation
+- POST /api/analyze: Stub endpoint with full validation
+
+**Reusable Patterns:**
+- Conditional button enabling based on form validation
+- Loading state with progress message updates
+- Stub endpoints that validate inputs and prepare infrastructure
+- Session directory structure for future data storage
+- UUID-based ID generation for tracking
+
+**Common Pitfalls:**
+- Button should show what's missing, not just be disabled
+- Progress messages keep users engaged during loading
+- Need to validate resume file exists before analysis
+- Session directory should be created even for stub endpoint
+- Loading state should prevent multiple submissions
+
+**Testing Approach:**
+- Backend: 8 tests for analyze endpoint (validation, errors, success)
+- Frontend: Placeholder tests for future implementation
+- Manual testing: Verify button states, loading, API integration
+- All 43 backend tests passing
 
 ### Week 3 - Role Description Input (Completed Jan 14, 2026)
 

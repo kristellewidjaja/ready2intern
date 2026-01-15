@@ -2,7 +2,7 @@
 
 **Last Updated:** January 14, 2026
 **Current Sprint:** Week 3
-**Completed Features:** 4/15
+**Completed Features:** 5/15
 
 ---
 
@@ -74,7 +74,7 @@ Integration:
 
 ## In Progress
 
-_No features in progress. Ready for Feature Slice 5._
+_No features in progress. Ready for Feature Slice 6 (LLM Integration)._
 
 ---
 
@@ -277,6 +277,83 @@ Integration:
 
 ---
 
+### ✅ Feature Slice 5: Analyze Button & Loading State (Week 3)
+**Completed:** January 14, 2026
+
+**What Was Built:**
+
+Frontend:
+- AnalyzeButton component with smart disabled state logic (`src/components/AnalyzeButton.tsx`)
+- Loading spinner with animated progress messages
+- Real-time form validation (checks all required fields)
+- Missing fields indicator when button is disabled
+- "Ready to analyze!" indicator when form is valid
+- Gradient button styling with hover effects
+- Integration into Dashboard with progressive disclosure
+
+Backend:
+- POST `/api/analyze` endpoint (stub for future LLM integration)
+- Analysis request validation using AnalysisRequest model
+- Session directory creation for future results storage
+- Analysis ID generation (UUID)
+- Resume file existence validation
+- Company ID validation
+- 8 new backend tests, all passing (43 total)
+
+Integration:
+- Button appears after role description is entered
+- Disabled state when any required field is missing
+- Enabled state with visual feedback when all fields valid
+- Loading state with spinner and progress messages
+- API call to analyze endpoint
+- Success alert with analysis ID
+- Error handling for API failures
+
+**Key Lessons Learned:**
+1. Smart button state management improves UX - show what's missing
+2. Progress messages during loading keep users engaged
+3. Visual feedback (gradient, hover effects) makes CTAs more appealing
+4. Stub endpoints allow frontend development without blocking on backend
+5. Session directory creation prepares for future features
+6. Comprehensive validation at both frontend and backend layers
+
+**Files Created:**
+- Frontend: 2 new files (AnalyzeButton component, test placeholder)
+- Backend: 2 new files (analyze route, test file)
+- Total: 4 new files, 3 modified files (Dashboard.tsx, api.ts, main.py)
+
+**Integration Points:**
+- AnalyzeButton accepts sessionId, company, roleDescription, and onAnalyze callback
+- Dashboard manages analysis flow and error handling
+- API service provides analyzeResume function
+- Backend validates all inputs and returns analysis_id for tracking
+
+**Technical Patterns Established:**
+- Smart button with conditional enabling based on form state
+- Loading states with progress message updates
+- Stub endpoints that validate and prepare for future implementation
+- Session directory structure for storing analysis results
+- UUID-based analysis ID generation for tracking
+
+**Tests Added:**
+- 8 backend endpoint tests: success, validation errors, missing session, all companies
+- Frontend test placeholders with detailed test cases
+- All 43 backend tests passing
+
+**Button States:**
+1. **Disabled (gray)**: Missing required fields, shows what's needed
+2. **Enabled (gradient)**: All fields valid, shows "Ready to analyze!"
+3. **Loading (spinner)**: Analysis in progress, shows progress messages
+4. **Success**: Shows alert with analysis ID
+
+**Future Integration:**
+- Analyze endpoint will trigger actual LLM analysis in Feature Slice 6
+- Results will be stored in session directory
+- Navigation to results page will be added
+- Error modal for better error display
+
+---
+
 ## Pending Features
 
 ### ⏳ Feature Slice 3: Company Selection (Week 2)
@@ -389,9 +466,9 @@ _To be configured during Feature Slice 1_
 
 ## Metrics
 
-- **Features Completed:** 4/15 (27%)
-- **Lines of Code:** ~3,200+
-- **Test Coverage:** Backend 35 tests passing, Frontend tests pending setup
+- **Features Completed:** 5/15 (33%)
+- **Lines of Code:** ~3,900+
+- **Test Coverage:** Backend 43 tests passing, Frontend tests pending setup
 - **Known Issues:** 0 (see ISSUES.md)
 
 ---
