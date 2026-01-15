@@ -1,8 +1,8 @@
 # Ready2Intern POC - Project Status
 
 **Last Updated:** January 13, 2026
-**Current Sprint:** Week 1
-**Completed Features:** 1/15
+**Current Sprint:** Week 2
+**Completed Features:** 3/15
 
 ---
 
@@ -74,7 +74,7 @@ Integration:
 
 ## In Progress
 
-_No features in progress. Ready for Feature Slice 3._
+_No features in progress. Ready for Feature Slice 4._
 
 ---
 
@@ -137,12 +137,78 @@ Integration:
 
 ---
 
-## Pending Features
+### ✅ Feature Slice 3: Company Selection (Week 2)
+**Completed:** January 13, 2026
 
-### ⏳ Feature Slice 3: Company Selection (Week 2)
-- Company logo selector
-- Company list endpoint
-- Company tenets storage
+**What Was Built:**
+
+Backend:
+- Company data models (`app/models/company.py`)
+- CompanyService class for managing company data (`app/services/company_service.py`)
+- GET `/api/companies` endpoint (`app/api/routes/companies.py`)
+- Company tenets files in `data/company-tenets/`:
+  - `amazon-leadership-principles.txt` (Amazon's 16 Leadership Principles)
+  - `meta-core-values.txt` (Meta's Core Values and cultural principles)
+  - `google-principles.txt` (Google's principles and "Googleyness")
+- Unit tests with 14 test cases, all passing (`tests/test_companies.py`, `tests/test_company_service.py`)
+
+Frontend:
+- TypeScript types for company data (`src/types/company.ts`)
+- CompanyLogoSelector component with single-select UI (`src/components/CompanyLogoSelector.tsx`)
+- Company logos as SVG files in `public/logos/` (amazon.svg, meta.svg, google.svg)
+- Integration into Dashboard with conditional rendering after resume upload
+- API service updated with `fetchCompanies()` function
+- Loading states, error handling, and responsive design
+
+Integration:
+- Backend returns list of 3 companies (Amazon, Meta, Google) with metadata
+- Frontend fetches companies on mount and displays logo cards
+- Single-select interaction with checkmark overlay on selected company
+- Company-specific colors applied to selected state
+- Dashboard shows company selection after resume upload
+- 24 total tests passing (14 company + 8 upload + 2 health check)
+
+**Key Lessons Learned:**
+1. Company tenets stored as plain text files for easy editing and LLM consumption
+2. SVG logos provide scalable, lightweight graphics with company brand colors
+3. Service layer pattern: CompanyService encapsulates company data logic
+4. Conditional rendering: Company selector only shows after resume upload (progressive disclosure)
+5. Dynamic styling: Company colors applied via inline styles for brand consistency
+6. Accessibility: Proper ARIA labels, keyboard navigation, and focus indicators
+
+**Files Created:**
+- Backend: 5 new files (models, service, route, 2 test files, 3 tenets files)
+- Frontend: 5 new files (types, component, 3 SVG logos, 2 test placeholder files, TESTING.md)
+- Total: 10 new files, 3 modified files (main.py, api.ts, Dashboard.tsx)
+
+**Integration Points:**
+- CompanyLogoSelector accepts `selectedCompany` and `onCompanySelect` props
+- Selected company ID stored in Dashboard state for future analysis flow
+- Company service validates company IDs and loads tenets from filesystem
+- API endpoint returns structured company data with colors, logos, and descriptions
+
+**Technical Patterns Established:**
+- Service layer pattern: CompanyService manages company data and tenets
+- Configuration as data: Company list defined in service, easy to extend
+- Progressive disclosure: Features appear as user completes previous steps
+- Component composition: CompanyLogoSelector is reusable and controlled
+- Dynamic theming: Company colors applied programmatically
+
+**Tests Added:**
+- 6 backend API tests: endpoint structure, required fields, unique IDs, valid data
+- 8 backend service tests: get all, get by ID, validation, tenets loading
+- Frontend test placeholders with TESTING.md guide for future implementation
+- All 24 backend tests passing with comprehensive coverage
+
+**Company Tenets Content:**
+- Amazon: 16 Leadership Principles with detailed descriptions and evaluation notes
+- Meta: Core Values (Move Fast, Focus on Impact, etc.) with cultural principles
+- Google: Principles and "Googleyness" criteria with technical excellence focus
+- Each file includes evaluation guidance for internship candidates
+
+---
+
+## Pending Features
 
 ### ⏳ Feature Slice 3: Company Selection (Week 2)
 - Company logo selector
@@ -254,9 +320,9 @@ _To be configured during Feature Slice 1_
 
 ## Metrics
 
-- **Features Completed:** 0/15 (0%)
-- **Lines of Code:** 0
-- **Test Coverage:** N/A
+- **Features Completed:** 3/15 (20%)
+- **Lines of Code:** ~2,500+
+- **Test Coverage:** Backend 24 tests passing, Frontend tests pending setup
 - **Known Issues:** 0 (see ISSUES.md)
 
 ---
