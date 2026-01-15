@@ -152,23 +152,23 @@
 - [x] Add error handling for parsing failures
 
 ### Role Matching - Backend
-- [ ] Create role matching service
-- [ ] Load company tenets from file system
-- [ ] Create role matching prompt template
-- [ ] Combine resume + role description + company tenets
-- [ ] Call Claude API for matching analysis
-- [ ] Calculate ATS score (0-100)
-- [ ] Calculate role match score (0-100)
-- [ ] Calculate company fit score (0-100)
-- [ ] Compute overall score (weighted average)
-- [ ] Save results to data/sessions/{session_id}/match_analysis.json
-- [ ] Add detailed explanations for each score
+- [x] Create role matching service
+- [x] Load company tenets from file system
+- [x] Create role matching prompt template
+- [x] Combine resume + role description + company tenets
+- [x] Call Claude API for matching analysis
+- [x] Calculate ATS score (0-100)
+- [x] Calculate role match score (0-100)
+- [x] Calculate company fit score (0-100)
+- [x] Compute overall score (weighted average)
+- [x] Save results to data/sessions/{session_id}/match_analysis.json
+- [x] Add detailed explanations for each score
 
 ### Integration & Testing
 - [x] Test resume file reading from file system
 - [x] Verify Claude API calls succeed
 - [x] Test resume data extraction accuracy
-- [ ] Verify match scores are calculated correctly
+- [x] Verify match scores are calculated correctly
 - [x] Test error handling for API failures
 - [x] Verify all results saved to file system
 
