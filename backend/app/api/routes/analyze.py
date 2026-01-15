@@ -11,6 +11,7 @@ from app.models.analysis import AnalysisRequest, AnalysisResponse
 from app.services.company_service import CompanyService
 from app.services.resume_analysis_service import ResumeAnalysisService
 from app.services.role_matching_service import RoleMatchingService
+from app.services.gap_analysis_service import GapAnalysisService
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -19,6 +20,7 @@ company_service = CompanyService()
 # Lazy initialization to avoid requiring API key at import time
 _resume_analysis_service = None
 _role_matching_service = None
+_gap_analysis_service = None
 
 
 def get_resume_analysis_service():
@@ -37,12 +39,20 @@ def get_role_matching_service():
     return _role_matching_service
 
 
+def get_gap_analysis_service():
+    """Get or create gap analysis service instance."""
+    global _gap_analysis_service
+    if _gap_analysis_service is None:
+        _gap_analysis_service = GapAnalysisService()
+    return _gap_analysis_service
+
+
 @router.post("/analyze", response_model=AnalysisResponse)
 async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     """
     Start complete resume analysis process using LLM.
     
-    This endpoint performs two-phase analysis:
+    This endpoint performs three-phase analysis:
     
     Phase 1 - Resume Analysis:
     1. Validates the request
@@ -57,6 +67,13 @@ async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     8. Sends combined data to Claude API for matching analysis
     9. Calculates ATS, Role Match, and Company Fit scores
     10. Saves results to data/sessions/{session_id}/match_analysis.json
+    
+    Phase 3 - Gap Analysis:
+    11. Loads match analysis results
+    12. Sends data to Claude API for gap identification
+    13. Identifies technical, experience, company fit, and resume gaps
+    14. Generates prioritized recommendations with resources
+    15. Saves results to data/sessions/{session_id}/gap_analysis.json
     
     Args:
         request: Analysis request with session_id, company, role_description
@@ -122,11 +139,26 @@ async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
                    f"Company Fit: {match_result.get('company_fit_score', {}).get('score', 0)}, "
                    f"Overall: {match_result.get('overall_score', {}).get('score', 0)}")
         
+        # Phase 3: Perform gap analysis
+        logger.info(f"Phase 3: Starting gap analysis for session: {request.session_id}")
+        gap_analysis_service = get_gap_analysis_service()
+        gap_result = await gap_analysis_service.analyze_gaps(
+            session_id=request.session_id,
+            company_id=request.company,
+            role_description=request.role_description,
+        )
+        
+        logger.info(f"Gap analysis completed successfully")
+        logger.info(f"Gaps identified - Total: {gap_result.get('summary', {}).get('total_gaps', 0)}, "
+                   f"High: {gap_result.get('summary', {}).get('high_priority_count', 0)}, "
+                   f"Medium: {gap_result.get('summary', {}).get('medium_priority_count', 0)}, "
+                   f"Low: {gap_result.get('summary', {}).get('low_priority_count', 0)}")
+        
         return AnalysisResponse(
             analysis_id=analysis_id,
             session_id=request.session_id,
             status="completed",
-            message="Complete analysis finished successfully. Resume parsed and role matching completed."
+            message="Complete analysis finished successfully. Resume parsed, role matching completed, and gap analysis generated."
         )
         
     except Exception as e:

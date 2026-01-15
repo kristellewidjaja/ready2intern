@@ -11,9 +11,10 @@ from app.main import app
 client = TestClient(app)
 
 
+@patch("app.api.routes.analyze.get_gap_analysis_service")
 @patch("app.api.routes.analyze.get_role_matching_service")
 @patch("app.api.routes.analyze.get_resume_analysis_service")
-def test_analyze_endpoint_success(mock_get_resume_service, mock_get_role_service, tmp_path):
+def test_analyze_endpoint_success(mock_get_resume_service, mock_get_role_service, mock_get_gap_service, tmp_path):
     """Test successful analysis request with LLM integration."""
     # Create a test resume file
     resume_dir = Path("data/resumes")
@@ -45,6 +46,22 @@ def test_analyze_endpoint_success(mock_get_resume_service, mock_get_role_service
     })
     mock_get_role_service.return_value = mock_role_service
     
+    # Mock the gap analysis service
+    mock_gap_service = AsyncMock()
+    mock_gap_service.analyze_gaps = AsyncMock(return_value={
+        "summary": {
+            "total_gaps": 5,
+            "high_priority_count": 2,
+            "medium_priority_count": 2,
+            "low_priority_count": 1
+        },
+        "technical_gaps": [],
+        "experience_gaps": [],
+        "company_fit_gaps": [],
+        "resume_optimization_gaps": []
+    })
+    mock_get_gap_service.return_value = mock_gap_service
+    
     try:
         response = client.post(
             "/api/analyze",
@@ -62,10 +79,12 @@ def test_analyze_endpoint_success(mock_get_resume_service, mock_get_role_service
         assert data["session_id"] == test_session_id
         assert data["status"] == "completed"
         assert "successfully" in data["message"].lower()
+        assert "gap analysis" in data["message"].lower()
         
-        # Verify both services were called
+        # Verify all three services were called
         mock_resume_service.analyze_resume.assert_called_once()
         mock_role_service.analyze_match.assert_called_once()
+        mock_gap_service.analyze_gaps.assert_called_once()
         
     finally:
         # Cleanup
@@ -143,9 +162,10 @@ def test_analyze_endpoint_missing_fields():
     assert response.status_code == 422  # Validation error
 
 
+@patch("app.api.routes.analyze.get_gap_analysis_service")
 @patch("app.api.routes.analyze.get_role_matching_service")
 @patch("app.api.routes.analyze.get_resume_analysis_service")
-def test_analyze_endpoint_with_optional_deadline(mock_get_resume_service, mock_get_role_service, tmp_path):
+def test_analyze_endpoint_with_optional_deadline(mock_get_resume_service, mock_get_role_service, mock_get_gap_service, tmp_path):
     """Test analysis with optional target deadline."""
     # Create a test resume file
     resume_dir = Path("data/resumes")
@@ -177,6 +197,17 @@ def test_analyze_endpoint_with_optional_deadline(mock_get_resume_service, mock_g
     })
     mock_get_role_service.return_value = mock_role_service
     
+    # Mock the gap analysis service
+    mock_gap_service = AsyncMock()
+    mock_gap_service.analyze_gaps = AsyncMock(return_value={
+        "summary": {"total_gaps": 3},
+        "technical_gaps": [],
+        "experience_gaps": [],
+        "company_fit_gaps": [],
+        "resume_optimization_gaps": []
+    })
+    mock_get_gap_service.return_value = mock_gap_service
+    
     try:
         response = client.post(
             "/api/analyze",
@@ -198,9 +229,10 @@ def test_analyze_endpoint_with_optional_deadline(mock_get_resume_service, mock_g
             test_file.unlink()
 
 
+@patch("app.api.routes.analyze.get_gap_analysis_service")
 @patch("app.api.routes.analyze.get_role_matching_service")
 @patch("app.api.routes.analyze.get_resume_analysis_service")
-def test_analyze_endpoint_all_companies(mock_get_resume_service, mock_get_role_service, tmp_path):
+def test_analyze_endpoint_all_companies(mock_get_resume_service, mock_get_role_service, mock_get_gap_service, tmp_path):
     """Test analysis with all valid companies."""
     resume_dir = Path("data/resumes")
     resume_dir.mkdir(parents=True, exist_ok=True)
@@ -226,6 +258,17 @@ def test_analyze_endpoint_all_companies(mock_get_resume_service, mock_get_role_s
         "overall_score": {"score": 79}
     })
     mock_get_role_service.return_value = mock_role_service
+    
+    # Mock the gap analysis service
+    mock_gap_service = AsyncMock()
+    mock_gap_service.analyze_gaps = AsyncMock(return_value={
+        "summary": {"total_gaps": 4},
+        "technical_gaps": [],
+        "experience_gaps": [],
+        "company_fit_gaps": [],
+        "resume_optimization_gaps": []
+    })
+    mock_get_gap_service.return_value = mock_gap_service
     
     for company in ["amazon", "meta", "google"]:
         test_session_id = f"test-session-{company}"
@@ -253,9 +296,10 @@ def test_analyze_endpoint_all_companies(mock_get_resume_service, mock_get_role_s
                 test_file.unlink()
 
 
+@patch("app.api.routes.analyze.get_gap_analysis_service")
 @patch("app.api.routes.analyze.get_role_matching_service")
 @patch("app.api.routes.analyze.get_resume_analysis_service")
-def test_analyze_endpoint_llm_failure(mock_get_resume_service, mock_get_role_service, tmp_path):
+def test_analyze_endpoint_llm_failure(mock_get_resume_service, mock_get_role_service, mock_get_gap_service, tmp_path):
     """Test analysis when LLM service fails."""
     # Create a test resume file
     resume_dir = Path("data/resumes")
@@ -272,9 +316,11 @@ def test_analyze_endpoint_llm_failure(mock_get_resume_service, mock_get_role_ser
     )
     mock_get_resume_service.return_value = mock_resume_service
     
-    # Mock role service (won't be called due to resume failure)
+    # Mock role and gap services (won't be called due to resume failure)
     mock_role_service = AsyncMock()
     mock_get_role_service.return_value = mock_role_service
+    mock_gap_service = AsyncMock()
+    mock_get_gap_service.return_value = mock_gap_service
     
     try:
         response = client.post(
