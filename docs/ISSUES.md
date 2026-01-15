@@ -6,7 +6,7 @@
 
 ## Active Issues
 
-_No active issues. Feature Slice 6 completed successfully._
+_No active issues. Feature Slice 8 completed successfully._
 
 ---
 

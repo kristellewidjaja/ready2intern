@@ -177,16 +177,16 @@
 ## Week 5: LLM Integration (Gap Analysis & Timeline)
 
 ### Gap Analysis - Backend
-- [ ] Create gap analysis service
-- [ ] Load match analysis results
-- [ ] Create gap identification prompt template
-- [ ] Call Claude API to identify gaps
-- [ ] Extract missing skills
-- [ ] Extract missing experience areas
-- [ ] Assign priority levels (High, Medium, Low)
-- [ ] Generate actionable recommendations for each gap
-- [ ] Provide specific examples and resources
-- [ ] Save results to data/sessions/{session_id}/gap_analysis.json
+- [x] Create gap analysis service
+- [x] Load match analysis results
+- [x] Create gap identification prompt template
+- [x] Call Claude API to identify gaps
+- [x] Extract missing skills
+- [x] Extract missing experience areas
+- [x] Assign priority levels (High, Medium, Low)
+- [x] Generate actionable recommendations for each gap
+- [x] Provide specific examples and resources
+- [x] Save results to data/sessions/{session_id}/gap_analysis.json
 
 ### Timeline Generation - Backend
 - [ ] Create timeline generation service

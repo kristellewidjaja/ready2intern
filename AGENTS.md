@@ -171,7 +171,7 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 4)
+### Current Status (Week 5)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
@@ -182,8 +182,115 @@ Track implementation status in this file using:
 - ✅ Analyze button (loading states, progress messages, API integration)
 - ✅ LLM integration (Anthropic Claude API, resume parsing, structured extraction)
 - ✅ Role matching (ATS, Role Match, Company Fit scores with weighted overall score)
+- ✅ Gap analysis (technical, experience, company fit, resume gaps with recommendations)
 
 ## Implementation Notes
+
+### Week 5 - LLM Gap Analysis (Completed Jan 15, 2026)
+
+**Key Decisions:**
+- Four-category gap system: Technical, Experience, Company Fit, Resume Optimization
+- Priority-based recommendations (High, Medium, Low) with reasoning
+- Resource-rich recommendations with specific courses, tutorials, projects
+- Project ideas for experience gaps with features and technologies
+- Quick wins for immediate improvements (2-3 items)
+- Long-term development goals (1-2 items)
+- Prioritized action plan with 3 phases (Immediate 0-2 weeks, Short-term 2-6 weeks, Medium-term 6+ weeks)
+- Gap IDs for cross-referencing between gaps and action items
+- Validation recalculates counts to ensure consistency
+
+**Services Created:**
+- GapAnalysisService: Orchestrates gap identification (`app/services/gap_analysis_service.py`)
+- Gap analysis prompts: Comprehensive templates with examples (`app/prompts/gap_analysis.py`)
+- Gap analysis models: Pydantic schemas for all gap types (`app/models/gap_analysis.py`)
+
+**Reusable Patterns:**
+- Multi-category gap identification (technical, experience, fit, resume)
+- Priority-based recommendation system
+- Resource-rich recommendations with URLs and time estimates
+- Project-based learning for experience gaps
+- Phased action planning (immediate, short-term, medium-term)
+- Gap ID cross-referencing system
+- Validation with automatic count recalculation
+- Lazy service initialization pattern (continued from previous features)
+
+**Common Pitfalls:**
+- Large token limit needed (16K) for comprehensive recommendations
+- Validation must recalculate counts from actual gaps, not trust LLM
+- Gap IDs must be unique across all categories
+- Project ideas need specific features and technologies, not generic descriptions
+- Quick wins should be truly quick (hours/days), not weeks
+- Action plan phases must reference actual gap IDs
+- Temperature slightly higher (0.4) for creative recommendations vs scoring (0.3)
+
+**Testing Approach:**
+- Backend: 126 total tests passing (99 original + 27 new)
+- 15 gap analysis service tests (analysis, parsing, validation, file I/O)
+- 12 gap analysis model tests (all Pydantic models)
+- Updated analyze endpoint tests to mock all three services
+- Gap count validation tests
+- Priority level tests
+- JSON parsing tests with markdown and invalid responses
+
+**Gap Categories:**
+
+Technical Gaps:
+- Category: technical_skills, tools, frameworks, languages
+- Current level: none, beginner, intermediate
+- Target level: beginner, intermediate, advanced
+- Recommendations with resources (courses, tutorials, docs)
+- Success criteria and estimated time
+
+Experience Gaps:
+- Category: work_experience, project_experience, domain_knowledge
+- Project ideas with features and technologies
+- Portfolio value assessment
+- Difficulty levels and estimated time
+
+Company Fit Gaps:
+- Category: leadership, values, culture, communication
+- Company value alignment
+- Evidence-based recommendations
+- Resume improvement suggestions
+
+Resume Optimization Gaps:
+- Category: keywords, formatting, content, storytelling
+- Before/after examples
+- ATS optimization tips
+- Specific changes to make
+
+**File Structure:**
+```
+backend/app/
+├── services/
+│   └── gap_analysis_service.py    # Gap identification orchestration
+├── prompts/
+│   └── gap_analysis.py             # Gap analysis prompts and templates
+├── models/
+│   └── gap_analysis.py             # Pydantic models for gaps
+└── api/routes/
+    └── analyze.py                  # Updated with three-phase analysis
+```
+
+**Data Flow:**
+1. Resume analysis completes → results saved
+2. Role matching completes → results saved
+3. GapAnalysisService loads match analysis
+4. Service loads company tenets from file system
+5. Match data formatted into summary for prompt
+6. Combined with role description and company tenets
+7. LLM identifies gaps across four categories
+8. Generates recommendations with resources and projects
+9. Creates quick wins and long-term goals
+10. Builds prioritized action plan with phases
+11. Validation recalculates counts
+12. Results saved to `data/sessions/{session_id}/gap_analysis.json`
+
+**Performance:**
+- Gap analysis time: 10-30 seconds (after role matching)
+- Total analysis time: 30-70 seconds (resume + matching + gaps)
+- Token usage: ~8,000-12,000 tokens per complete analysis
+- Cost: ~$0.06-0.10 per complete analysis (all three phases)
 
 ### Week 4 - LLM Role Matching (Completed Jan 15, 2026)
 
