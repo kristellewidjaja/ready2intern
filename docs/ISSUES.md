@@ -1,24 +1,54 @@
 # Ready2Intern POC - Issues
 
-**Last Updated:** Not started
+**Last Updated:** January 13, 2026
 
 ---
 
 ## Active Issues
 
-_No active issues yet. Issues will be logged as they are discovered during development._
+_No active issues. Feature Slice 3 completed successfully._
 
 ---
 
 ## Resolved Issues
 
-_No resolved issues yet._
+_No issues encountered during Feature Slices 1-3._
 
 ---
 
 ## Technical Debt
 
-_Technical debt will be tracked here as the project progresses._
+#### TD-1: Frontend Test Infrastructure Not Set Up
+**Added:** January 13, 2026 (Feature Slice 3)
+**Priority:** Medium
+
+**Description:**
+Frontend tests are placeholder files. Need to set up Vitest, React Testing Library, and configure test environment.
+
+**Action Items:**
+- Install testing dependencies (vitest, @testing-library/react, etc.)
+- Create vitest.config.ts
+- Set up test setup file with jest-dom
+- Implement actual tests for CompanyLogoSelector and API service
+- Add test script to package.json
+
+**Assigned To:** Future sprint (not blocking POC)
+
+---
+
+#### TD-2: FastAPI on_event Deprecation Warnings
+**Added:** January 13, 2026 (Feature Slice 3)
+**Priority:** Low
+
+**Description:**
+Using deprecated `@app.on_event("startup")` and `@app.on_event("shutdown")` decorators. FastAPI recommends using lifespan event handlers instead.
+
+**Action Items:**
+- Refactor to use lifespan context manager
+- Update main.py to use modern pattern
+- Reference: https://fastapi.tiangolo.com/advanced/events/
+
+**Assigned To:** Future cleanup (not blocking POC)
 
 ---
 

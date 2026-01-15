@@ -1,0 +1,96 @@
+Meta Core Values and Cultural Principles
+
+Meta (formerly Facebook) evaluates candidates based on these core values and cultural principles. For internship candidates, Meta looks for alignment with these values through projects, experiences, and problem-solving approaches.
+
+Core Values:
+
+1. Move Fast
+We move fast to learn what works. We build, iterate, and learn. Speed enables us to build more things and learn faster. However, as most companies grow, they slow down too much because they're more afraid of making mistakes than they are of losing opportunities by moving too slowly. We have a saying: "Move fast and break things." The idea is that if you never break anything, you're probably not moving fast enough.
+
+For interns: Show rapid prototyping, quick iteration cycles, ability to ship projects, and comfort with ambiguity.
+
+2. Focus on Impact
+We're focused on building things that matter. Meta has billions of users, and we're working on products that affect people's lives at a massive scale. We measure ourselves by the impact we have on the world, not by the number of features we ship.
+
+For interns: Demonstrate projects with measurable impact, focus on outcomes over outputs, and understanding of metrics and user impact.
+
+3. Build Social Value
+We build products that bring people together. Our mission is to give people the power to build community and bring the world closer together. We believe that the more connected we are, the better we can understand each other.
+
+For interns: Show projects that connect people, solve social problems, or improve communities. Understanding of social impact and ethical considerations.
+
+4. Be Bold
+Building great things means taking risks. We encourage everyone to make bold decisions, even if it means being wrong sometimes. We'd rather try something new and fail than never try at all.
+
+For interns: Demonstrate willingness to tackle ambitious projects, take calculated risks, and learn from failures. Show innovative thinking and creative problem-solving.
+
+5. Be Open
+We believe that a more open world is a better world. Openness leads to better understanding and more progress. We share information broadly within the company and encourage open communication.
+
+For interns: Show transparent communication, collaboration skills, open source contributions, and willingness to share knowledge and learn from others.
+
+6. Build Awesome Things
+We're here to build things that people love. We care deeply about the quality of what we build and the experience we create for people.
+
+For interns: Demonstrate attention to detail, user experience focus, quality-driven development, and passion for building great products.
+
+Additional Cultural Principles:
+
+7. Nothing at Meta is Someone Else's Problem
+Everyone is empowered to identify and solve problems, regardless of their role or level. We don't wait for someone else to fix things.
+
+For interns: Show initiative, ownership mentality, and willingness to step up and solve problems beyond your immediate responsibilities.
+
+8. Meta, Metamates, Me
+This principle emphasizes putting the company first, then your team, then yourself. It's about collective success over individual achievement.
+
+For interns: Demonstrate team collaboration, helping others succeed, and prioritizing team goals over personal recognition.
+
+9. Live in the Future
+We think about where the world is going, not just where it is today. We build for the future and anticipate what people will need.
+
+For interns: Show forward-thinking projects, understanding of emerging technologies, and ability to anticipate future trends and needs.
+
+10. Embrace Feedback
+We believe in giving and receiving feedback openly and constructively. Feedback helps us grow and improve.
+
+For interns: Demonstrate ability to receive and act on feedback, iterate based on user feedback, and show continuous improvement in your work.
+
+---
+
+Technical Excellence at Meta:
+
+Meta also values strong technical skills and engineering excellence:
+
+- Code Quality: Clean, maintainable, well-tested code
+- System Design: Understanding of scalable architectures
+- Problem Solving: Strong algorithmic and data structure knowledge
+- Collaboration: Ability to work effectively in teams
+- Communication: Clear technical communication skills
+- Learning Agility: Quick to pick up new technologies and concepts
+
+---
+
+Evaluation Notes for Internship Candidates:
+
+When evaluating resumes and experiences against Meta's values, look for:
+
+- Move Fast: Rapid project completion, multiple iterations, agile development practices
+- Focus on Impact: Quantified results, user metrics, measurable outcomes
+- Build Social Value: Projects that connect people, community-focused applications, social good initiatives
+- Be Bold: Ambitious projects, novel approaches, willingness to experiment
+- Be Open: Open source contributions, knowledge sharing, collaborative projects
+- Build Awesome Things: Polished projects, great UX/UI, attention to quality
+- Nothing is Someone Else's Problem: Cross-functional work, initiative beyond assignments
+- Meta, Metamates, Me: Team projects, helping others, collaborative achievements
+- Live in the Future: Emerging tech projects (AI/ML, VR/AR, blockchain), forward-thinking solutions
+- Embrace Feedback: Iterative development, incorporating user feedback, continuous improvement
+
+For Software Engineering Intern roles, focus especially on: Move Fast, Focus on Impact, Be Bold, Build Awesome Things, and technical excellence.
+
+Key Differentiators:
+- Meta values speed and iteration over perfection
+- Impact and scale matter more than complexity
+- Social connection and community building are central
+- Bold, ambitious thinking is encouraged
+- Open communication and collaboration are essential

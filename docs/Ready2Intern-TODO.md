@@ -60,28 +60,28 @@
 - [x] Add file size limits to endpoint
 
 ### Company Selection - Frontend
-- [ ] Download company logos (Amazon, Meta, Google)
-- [ ] Create CompanyLogoSelector component
-- [ ] Implement single-select radio button logic
-- [ ] Add checkmark overlay for selected state
-- [ ] Style hover and selected states
-- [ ] Store selected company in state
-- [ ] Add company selection validation
+- [x] Download company logos (Amazon, Meta, Google)
+- [x] Create CompanyLogoSelector component
+- [x] Implement single-select radio button logic
+- [x] Add checkmark overlay for selected state
+- [x] Style hover and selected states
+- [x] Store selected company in state
+- [x] Add company selection validation
 
 ### Company Selection - Backend
-- [ ] Create GET /api/companies endpoint
-- [ ] Define company data structure (name, logo_url, color, tenets_file)
-- [ ] Store company logos in public/logos/
-- [ ] Create company tenets files in data/company-tenets/:
-  - [ ] amazon-leadership-principles.txt
-  - [ ] meta-core-values.txt
-  - [ ] google-principles.txt
-- [ ] Return company list with metadata
+- [x] Create GET /api/companies endpoint
+- [x] Define company data structure (name, logo_url, color, tenets_file)
+- [x] Store company logos in public/logos/
+- [x] Create company tenets files in data/company-tenets/:
+  - [x] amazon-leadership-principles.txt
+  - [x] meta-core-values.txt
+  - [x] google-principles.txt
+- [x] Return company list with metadata
 
 ### Integration & Testing
 - [x] Test end-to-end resume upload flow
 - [x] Verify files persist in data/resumes/
-- [ ] Test company selection UI interaction
+- [x] Test company selection UI interaction
 - [x] Verify session management works
 - [x] Test error handling for invalid uploads
 

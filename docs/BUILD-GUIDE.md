@@ -632,10 +632,10 @@ fetch('http://localhost:8000/api/health')
 
 ### Create Project Tracking Files
 
-#### PROJECT.md (Project State Tracking)
+#### PROGRESS.md (Project State Tracking)
 ```bash
 cd ..  # Back to root
-cp PROJECT.md ready2intern-poc/PROJECT.md
+cp PROGRESS.md ready2intern-poc/PROGRESS.md
 ```
 
 #### ISSUES.md (Issue Tracking)
@@ -740,7 +740,7 @@ See `AGENT-WORKFLOW.md` for how to work with coding agents.
 
 ## Project Tracking
 
-- **PROJECT.md** - Current project state, completed features, lessons learned
+- **PROGRESS.md** - Current project state, completed features, lessons learned
 - **ISSUES.md** - Known issues, technical debt, enhancement ideas
 
 Update these files after completing each feature slice.
