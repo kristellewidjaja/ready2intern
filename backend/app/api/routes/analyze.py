@@ -10,6 +10,7 @@ from fastapi import APIRouter, HTTPException
 from app.models.analysis import AnalysisRequest, AnalysisResponse
 from app.services.company_service import CompanyService
 from app.services.resume_analysis_service import ResumeAnalysisService
+from app.services.role_matching_service import RoleMatchingService
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -17,6 +18,7 @@ company_service = CompanyService()
 
 # Lazy initialization to avoid requiring API key at import time
 _resume_analysis_service = None
+_role_matching_service = None
 
 
 def get_resume_analysis_service():
@@ -27,17 +29,34 @@ def get_resume_analysis_service():
     return _resume_analysis_service
 
 
+def get_role_matching_service():
+    """Get or create role matching service instance."""
+    global _role_matching_service
+    if _role_matching_service is None:
+        _role_matching_service = RoleMatchingService()
+    return _role_matching_service
+
+
 @router.post("/analyze", response_model=AnalysisResponse)
 async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     """
-    Start resume analysis process using LLM.
+    Start complete resume analysis process using LLM.
     
-    This endpoint:
+    This endpoint performs two-phase analysis:
+    
+    Phase 1 - Resume Analysis:
     1. Validates the request
     2. Extracts text from the uploaded resume (PDF/DOCX)
     3. Sends resume to Claude API for analysis
     4. Extracts structured data (skills, experience, education, projects)
     5. Saves results to data/sessions/{session_id}/resume_analysis.json
+    
+    Phase 2 - Role Matching:
+    6. Loads resume analysis results
+    7. Loads company tenets
+    8. Sends combined data to Claude API for matching analysis
+    9. Calculates ATS, Role Match, and Company Fit scores
+    10. Saves results to data/sessions/{session_id}/match_analysis.json
     
     Args:
         request: Analysis request with session_id, company, role_description
@@ -75,29 +94,44 @@ async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     analysis_id = str(uuid.uuid4())
     
     try:
-        # Perform resume analysis using LLM
-        logger.info(f"Starting LLM-based resume analysis for session: {request.session_id}")
+        # Phase 1: Perform resume analysis using LLM
+        logger.info(f"Phase 1: Starting resume analysis for session: {request.session_id}")
         resume_analysis_service = get_resume_analysis_service()
         analysis_result = await resume_analysis_service.analyze_resume(
             resume_file_path=resume_file_path,
             session_id=request.session_id,
         )
         
-        logger.info(f"Resume analysis completed successfully for session: {request.session_id}")
+        logger.info(f"Resume analysis completed successfully")
         logger.info(f"Extracted {len(analysis_result.get('skills', {}).get('programming_languages', []))} programming languages")
         logger.info(f"Found {len(analysis_result.get('experience', []))} work experiences")
         logger.info(f"Found {len(analysis_result.get('projects', []))} projects")
+        
+        # Phase 2: Perform role matching analysis
+        logger.info(f"Phase 2: Starting role matching analysis for session: {request.session_id}")
+        role_matching_service = get_role_matching_service()
+        match_result = await role_matching_service.analyze_match(
+            session_id=request.session_id,
+            company_id=request.company,
+            role_description=request.role_description,
+        )
+        
+        logger.info(f"Role matching analysis completed successfully")
+        logger.info(f"Scores - ATS: {match_result.get('ats_score', {}).get('score', 0)}, "
+                   f"Role Match: {match_result.get('role_match_score', {}).get('score', 0)}, "
+                   f"Company Fit: {match_result.get('company_fit_score', {}).get('score', 0)}, "
+                   f"Overall: {match_result.get('overall_score', {}).get('score', 0)}")
         
         return AnalysisResponse(
             analysis_id=analysis_id,
             session_id=request.session_id,
             status="completed",
-            message="Resume analysis completed successfully. Results saved."
+            message="Complete analysis finished successfully. Resume parsed and role matching completed."
         )
         
     except Exception as e:
-        logger.error(f"Resume analysis failed for session {request.session_id}: {e}")
+        logger.error(f"Analysis failed for session {request.session_id}: {e}")
         raise HTTPException(
             status_code=500,
-            detail=f"Resume analysis failed: {str(e)}"
+            detail=f"Analysis failed: {str(e)}"
         )

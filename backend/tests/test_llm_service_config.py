@@ -13,6 +13,10 @@ class TestLLMServiceConfiguration:
     def test_default_model(self, monkeypatch):
         """Test that default model is used when not configured."""
         monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key-123")
+        # Ensure no model override from environment
+        monkeypatch.delenv("ANTHROPIC_MODEL", raising=False)
+        monkeypatch.delenv("LLM_MAX_RETRIES", raising=False)
+        monkeypatch.delenv("LLM_RETRY_DELAY", raising=False)
         
         service = LLMService()
         
