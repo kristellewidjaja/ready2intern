@@ -1,0 +1,103 @@
+# JOHN DOE
+**Software Engineering Intern Candidate**
+
+📧 john.doe@email.com | 📱 (555) 123-4567 | 📍 San Francisco, CA  
+💼 [LinkedIn](https://linkedin.com/in/johndoe) | 💻 [GitHub](https://github.com/johndoe)
+
+---
+
+## EDUCATION
+
+**University of California, Berkeley**  
+Bachelor of Science in Computer Science  
+Expected Graduation: May 2025 | GPA: 3.8/4.0
+
+**Relevant Coursework:** Data Structures, Algorithms, Operating Systems, Database Systems, Machine Learning
+
+---
+
+## SKILLS
+
+**Programming Languages:** Python, Java, JavaScript, TypeScript, C++, SQL
+
+**Frameworks & Libraries:** React, Node.js, Express, Django, Flask, TensorFlow, PyTorch
+
+**Tools & Technologies:** Git, Docker, AWS (EC2, S3, Lambda), PostgreSQL, MongoDB, Redis
+
+**Soft Skills:** Team Leadership, Problem Solving, Communication, Agile Development
+
+---
+
+## EXPERIENCE
+
+### Software Engineering Intern | Tech Startup Inc. | San Francisco, CA
+**June 2024 - August 2024**
+
+- Developed and deployed a full-stack web application using React and Node.js, serving 10,000+ users
+- Improved API response time by 40% through database query optimization and caching strategies
+- Collaborated with cross-functional team of 5 engineers using Agile methodologies
+- Implemented automated testing suite with Jest and Cypress, increasing code coverage to 85%
+- **Technologies:** React, Node.js, Express, PostgreSQL, Redis, AWS
+
+### Research Assistant | UC Berkeley AI Lab | Berkeley, CA
+**January 2024 - Present**
+
+- Conducting research on natural language processing and machine learning models
+- Developed a sentiment analysis model achieving 92% accuracy on benchmark datasets
+- Presented findings at undergraduate research symposium
+- **Technologies:** Python, TensorFlow, PyTorch, NumPy, Pandas
+
+---
+
+## PROJECTS
+
+### E-Commerce Platform | Personal Project
+
+- Built a full-stack e-commerce application with user authentication, product catalog, and payment processing
+- Implemented RESTful API with Node.js and Express, integrated with Stripe for payments
+- Deployed on AWS using EC2, S3, and RDS with CI/CD pipeline
+- **Technologies:** React, Node.js, Express, PostgreSQL, AWS, Stripe API
+- **Link:** [github.com/johndoe/ecommerce-platform](https://github.com/johndoe/ecommerce-platform)
+
+### Machine Learning Image Classifier | Academic Project
+
+- Developed a convolutional neural network for image classification with 95% accuracy
+- Trained model on dataset of 50,000 images using transfer learning with ResNet
+- Optimized model performance through hyperparameter tuning and data augmentation
+- **Technologies:** Python, TensorFlow, Keras, NumPy, Matplotlib
+
+### Real-Time Chat Application | Hackathon Project (1st Place)
+
+- Built a real-time messaging application with WebSocket support for instant communication
+- Implemented features including group chats, file sharing, and message encryption
+- Won first place at UC Berkeley Hackathon among 50+ teams
+- **Technologies:** React, Socket.io, Node.js, MongoDB
+
+---
+
+## CERTIFICATIONS
+
+- **AWS Certified Cloud Practitioner** | Amazon Web Services | March 2024
+- **Machine Learning Specialization** | Coursera (Stanford University) | January 2024
+
+---
+
+## AWARDS & HONORS
+
+- **Dean's List** | UC Berkeley | Fall 2023, Spring 2024
+- **First Place, UC Berkeley Hackathon** | October 2024
+- **National Merit Scholar** | 2021
+
+---
+
+## LEADERSHIP & ACTIVITIES
+
+### President, Computer Science Student Association | UC Berkeley | 2024-Present
+
+- Lead organization of 200+ members, organizing tech talks and networking events
+- Coordinated annual hackathon with 500+ participants and $10,000 in prizes
+
+### Volunteer Coding Instructor | Code for Good | 2023-Present
+
+- Teach programming fundamentals to underprivileged high school students
+- Mentored 20+ students in Python and web development

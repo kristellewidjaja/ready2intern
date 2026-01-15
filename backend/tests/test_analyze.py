@@ -3,6 +3,7 @@ Tests for analyze API endpoint.
 """
 
 import pytest
+from unittest.mock import patch, AsyncMock
 from fastapi.testclient import TestClient
 from pathlib import Path
 from app.main import app
@@ -10,8 +11,9 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_analyze_endpoint_success(tmp_path):
-    """Test successful analysis request."""
+@patch("app.api.routes.analyze.get_resume_analysis_service")
+def test_analyze_endpoint_success(mock_get_service, tmp_path):
+    """Test successful analysis request with LLM integration."""
     # Create a test resume file
     resume_dir = Path("data/resumes")
     resume_dir.mkdir(parents=True, exist_ok=True)
@@ -19,6 +21,18 @@ def test_analyze_endpoint_success(tmp_path):
     test_session_id = "test-session-123"
     test_file = resume_dir / f"{test_session_id}_test.pdf"
     test_file.write_text("test resume content")
+    
+    # Mock the resume analysis service
+    mock_service = AsyncMock()
+    mock_service.analyze_resume = AsyncMock(return_value={
+        "personal_info": {"name": "Test User"},
+        "skills": {"programming_languages": ["Python"]},
+        "experience": [],
+        "projects": [],
+        "education": [],
+        "summary": "Test summary"
+    })
+    mock_get_service.return_value = mock_service
     
     try:
         response = client.post(
@@ -35,12 +49,11 @@ def test_analyze_endpoint_success(tmp_path):
         
         assert "analysis_id" in data
         assert data["session_id"] == test_session_id
-        assert data["status"] == "queued"
-        assert "message" in data
+        assert data["status"] == "completed"
+        assert "successfully" in data["message"].lower()
         
-        # Check that session directory was created
-        session_dir = Path(f"data/sessions/{test_session_id}")
-        assert session_dir.exists()
+        # Verify the service was called
+        mock_service.analyze_resume.assert_called_once()
         
     finally:
         # Cleanup
@@ -118,7 +131,8 @@ def test_analyze_endpoint_missing_fields():
     assert response.status_code == 422  # Validation error
 
 
-def test_analyze_endpoint_with_optional_deadline(tmp_path):
+@patch("app.api.routes.analyze.get_resume_analysis_service")
+def test_analyze_endpoint_with_optional_deadline(mock_get_service, tmp_path):
     """Test analysis with optional target deadline."""
     # Create a test resume file
     resume_dir = Path("data/resumes")
@@ -127,6 +141,18 @@ def test_analyze_endpoint_with_optional_deadline(tmp_path):
     test_session_id = "test-session-456"
     test_file = resume_dir / f"{test_session_id}_test.pdf"
     test_file.write_text("test resume content")
+    
+    # Mock the resume analysis service
+    mock_service = AsyncMock()
+    mock_service.analyze_resume = AsyncMock(return_value={
+        "personal_info": {"name": "Test User"},
+        "skills": {"programming_languages": ["Python"]},
+        "experience": [],
+        "projects": [],
+        "education": [],
+        "summary": "Test summary"
+    })
+    mock_get_service.return_value = mock_service
     
     try:
         response = client.post(
@@ -141,7 +167,7 @@ def test_analyze_endpoint_with_optional_deadline(tmp_path):
         
         assert response.status_code == 200
         data = response.json()
-        assert data["status"] == "queued"
+        assert data["status"] == "completed"
         
     finally:
         # Cleanup
@@ -149,10 +175,23 @@ def test_analyze_endpoint_with_optional_deadline(tmp_path):
             test_file.unlink()
 
 
-def test_analyze_endpoint_all_companies(tmp_path):
+@patch("app.api.routes.analyze.get_resume_analysis_service")
+def test_analyze_endpoint_all_companies(mock_get_service, tmp_path):
     """Test analysis with all valid companies."""
     resume_dir = Path("data/resumes")
     resume_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Mock the resume analysis service
+    mock_service = AsyncMock()
+    mock_service.analyze_resume = AsyncMock(return_value={
+        "personal_info": {"name": "Test User"},
+        "skills": {"programming_languages": ["Python"]},
+        "experience": [],
+        "projects": [],
+        "education": [],
+        "summary": "Test summary"
+    })
+    mock_get_service.return_value = mock_service
     
     for company in ["amazon", "meta", "google"]:
         test_session_id = f"test-session-{company}"
@@ -172,8 +211,46 @@ def test_analyze_endpoint_all_companies(tmp_path):
             assert response.status_code == 200
             data = response.json()
             assert data["session_id"] == test_session_id
+            assert data["status"] == "completed"
             
         finally:
             # Cleanup
             if test_file.exists():
                 test_file.unlink()
+
+
+@patch("app.api.routes.analyze.get_resume_analysis_service")
+def test_analyze_endpoint_llm_failure(mock_get_service, tmp_path):
+    """Test analysis when LLM service fails."""
+    # Create a test resume file
+    resume_dir = Path("data/resumes")
+    resume_dir.mkdir(parents=True, exist_ok=True)
+    
+    test_session_id = "test-session-fail"
+    test_file = resume_dir / f"{test_session_id}_test.pdf"
+    test_file.write_text("test resume content")
+    
+    # Mock the resume analysis service to raise exception
+    mock_service = AsyncMock()
+    mock_service.analyze_resume = AsyncMock(
+        side_effect=Exception("LLM API failed")
+    )
+    mock_get_service.return_value = mock_service
+    
+    try:
+        response = client.post(
+            "/api/analyze",
+            json={
+                "session_id": test_session_id,
+                "company": "amazon",
+                "role_description": "A" * 100,
+            },
+        )
+        
+        assert response.status_code == 500
+        assert "failed" in response.json()["detail"].lower()
+        
+    finally:
+        # Cleanup
+        if test_file.exists():
+            test_file.unlink()
