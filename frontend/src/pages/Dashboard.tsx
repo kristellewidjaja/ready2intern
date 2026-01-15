@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FileDropzone } from '../components/FileDropzone';
 import { CompanyLogoSelector } from '../components/CompanyLogoSelector';
+import { RoleDescriptionInput } from '../components/RoleDescriptionInput';
 import type { UploadResponse } from '../types/upload';
 
 interface HealthStatus {
@@ -16,6 +17,7 @@ export const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [roleDescription, setRoleDescription] = useState<string>('');
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -44,6 +46,10 @@ export const Dashboard = () => {
   const handleCompanySelect = (companyId: string) => {
     setSelectedCompany(companyId);
     console.log('Company selected:', companyId);
+  };
+
+  const handleRoleDescriptionChange = (value: string) => {
+    setRoleDescription(value);
   };
 
   return (
@@ -112,6 +118,19 @@ export const Dashboard = () => {
         </div>
       )}
 
+      {/* Role Description Section */}
+      {sessionId && selectedCompany && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            Step 3: Paste Role Description
+          </h3>
+          <RoleDescriptionInput
+            value={roleDescription}
+            onChange={handleRoleDescriptionChange}
+          />
+        </div>
+      )}
+
       {/* Progress Steps */}
       <div className="grid md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -145,11 +164,25 @@ export const Dashboard = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="text-primary-500 mb-3">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            3. Role Description
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            {roleDescription.length >= 50 ? '✓ Role description added' : 'Paste the job description'}
+          </p>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="text-primary-500 mb-3">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            3. Get Analysis
+            4. Get Analysis
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
             Receive AI-powered insights (Coming soon)
