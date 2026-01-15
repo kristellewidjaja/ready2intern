@@ -181,8 +181,87 @@ Track implementation status in this file using:
 - ✅ Role description input (textarea, validation, character counter)
 - ✅ Analyze button (loading states, progress messages, API integration)
 - ✅ LLM integration (Anthropic Claude API, resume parsing, structured extraction)
+- ✅ Role matching (ATS, Role Match, Company Fit scores with weighted overall score)
 
 ## Implementation Notes
+
+### Week 4 - LLM Role Matching (Completed Jan 15, 2026)
+
+**Key Decisions:**
+- Three-dimensional scoring system: ATS (20%), Role Match (50%), Company Fit (30%)
+- Weighted average calculation for overall score with clear recommendation levels
+- Structured JSON prompt with detailed scoring guidelines for consistency
+- Resume summary formatting to provide context-rich input to LLM
+- Score validation and clamping (0-100 range) with automatic recalculation
+- Separate prompt template for role matching vs resume analysis
+
+**Services Created:**
+- RoleMatchingService: Orchestrates role matching analysis (`app/services/role_matching_service.py`)
+- Role matching prompts: Structured templates with scoring criteria (`app/prompts/role_matching.py`)
+
+**Reusable Patterns:**
+- Multi-dimensional scoring with weighted averages
+- Structured JSON prompts with clear evaluation criteria
+- Score validation and normalization (clamping to valid ranges)
+- Resume data formatting for LLM context
+- Recommendation level mapping based on score thresholds
+- Lazy service initialization pattern (continued from previous feature)
+
+**Common Pitfalls:**
+- Scores must be validated and clamped to 0-100 range
+- Overall score should be recalculated even if LLM provides one
+- Resume summary must include all relevant sections for accurate matching
+- Company tenets must be loaded from file system before analysis
+- LLM responses may not include all required fields - provide defaults
+- Temperature should be low (0.3) for consistent scoring
+
+**Testing Approach:**
+- Backend: 99 total tests passing (82 original + 17 new)
+- 17 role matching service tests (analysis, scoring, validation)
+- Updated analyze endpoint tests to mock both services
+- Score calculation tests with various ranges and edge cases
+- Recommendation level tests for all score thresholds
+- JSON parsing tests with markdown and invalid responses
+
+**Scoring System:**
+- **ATS Score (20% weight)**: Keyword matching, formatting, ATS-friendliness
+- **Role Match Score (50% weight)**: Technical skills, experience, projects, education alignment
+- **Company Fit Score (30% weight)**: Values alignment, cultural indicators
+- **Overall Score**: Weighted average with 5 recommendation levels
+
+**Recommendation Levels:**
+- strong_match (85-100): Highly recommend for interview
+- good_match (70-84): Recommend for interview
+- moderate_match (55-69): Consider for interview
+- weak_match (40-54): Likely not a fit
+- poor_match (0-39): Not recommended
+
+**File Structure:**
+```
+backend/app/
+├── services/
+│   └── role_matching_service.py    # Role matching orchestration
+├── prompts/
+│   └── role_matching.py             # Scoring prompts and templates
+└── api/routes/
+    └── analyze.py                   # Updated with two-phase analysis
+```
+
+**Data Flow:**
+1. Resume analysis completes → results saved
+2. RoleMatchingService loads resume analysis
+3. Service loads company tenets from file system
+4. Resume data formatted into readable summary
+5. Combined with role description and company tenets
+6. LLM analyzes match across three dimensions
+7. Scores validated and overall score calculated
+8. Results saved to `data/sessions/{session_id}/match_analysis.json`
+
+**Performance:**
+- Role matching time: 10-20 seconds (after resume analysis)
+- Total analysis time: 20-50 seconds (resume + role matching)
+- Token usage: ~3,500-4,000 tokens per complete analysis
+- Cost: ~$0.03-0.04 per complete analysis (resume + matching)
 
 ### Week 4 - LLM Resume Analysis (Completed Jan 15, 2026)
 

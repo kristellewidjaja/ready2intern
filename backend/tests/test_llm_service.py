@@ -33,8 +33,11 @@ def mock_anthropic_response():
 class TestLLMService:
     """Test suite for LLMService."""
     
-    def test_init_success(self, mock_env_vars):
+    def test_init_success(self, mock_env_vars, monkeypatch):
         """Test LLMService initialization with valid API key."""
+        # Ensure no model override from environment
+        monkeypatch.delenv("ANTHROPIC_MODEL", raising=False)
+        
         service = LLMService()
         assert service is not None
         assert service.model == "claude-3-5-sonnet-20241022"  # Default value
