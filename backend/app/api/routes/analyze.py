@@ -12,6 +12,7 @@ from app.services.company_service import CompanyService
 from app.services.resume_analysis_service import ResumeAnalysisService
 from app.services.role_matching_service import RoleMatchingService
 from app.services.gap_analysis_service import GapAnalysisService
+from app.services.timeline_service import TimelineService
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -21,6 +22,7 @@ company_service = CompanyService()
 _resume_analysis_service = None
 _role_matching_service = None
 _gap_analysis_service = None
+_timeline_service = None
 
 
 def get_resume_analysis_service():
@@ -47,12 +49,20 @@ def get_gap_analysis_service():
     return _gap_analysis_service
 
 
+def get_timeline_service():
+    """Get or create timeline service instance."""
+    global _timeline_service
+    if _timeline_service is None:
+        _timeline_service = TimelineService()
+    return _timeline_service
+
+
 @router.post("/analyze", response_model=AnalysisResponse)
 async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     """
     Start complete resume analysis process using LLM.
     
-    This endpoint performs three-phase analysis:
+    This endpoint performs four-phase analysis:
     
     Phase 1 - Resume Analysis:
     1. Validates the request
@@ -75,8 +85,15 @@ async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
     14. Generates prioritized recommendations with resources
     15. Saves results to data/sessions/{session_id}/gap_analysis.json
     
+    Phase 4 - Timeline Generation:
+    16. Loads gap analysis results
+    17. Calculates timeline parameters (weeks available, hours per week)
+    18. Sends data to Claude API for timeline generation
+    19. Creates phases, tasks, milestones, and weekly breakdown
+    20. Saves results to data/sessions/{session_id}/timeline.json
+    
     Args:
-        request: Analysis request with session_id, company, role_description
+        request: Analysis request with session_id, company, role_description, target_deadline
         
     Returns:
         AnalysisResponse with analysis_id and status
@@ -154,11 +171,25 @@ async def analyze_resume(request: AnalysisRequest) -> AnalysisResponse:
                    f"Medium: {gap_result.get('summary', {}).get('medium_priority_count', 0)}, "
                    f"Low: {gap_result.get('summary', {}).get('low_priority_count', 0)}")
         
+        # Phase 4: Generate development timeline
+        logger.info(f"Phase 4: Starting timeline generation for session: {request.session_id}")
+        timeline_service = get_timeline_service()
+        timeline_result = await timeline_service.generate_timeline(
+            session_id=request.session_id,
+            role_description=request.role_description,
+            target_deadline=request.target_deadline,
+        )
+        
+        logger.info(f"Timeline generation completed successfully")
+        logger.info(f"Timeline - Phases: {len(timeline_result.get('phases', []))}, "
+                   f"Weeks: {timeline_result.get('metadata', {}).get('total_weeks', 0)}, "
+                   f"Total hours: {timeline_result.get('metadata', {}).get('total_hours', 0)}")
+        
         return AnalysisResponse(
             analysis_id=analysis_id,
             session_id=request.session_id,
             status="completed",
-            message="Complete analysis finished successfully. Resume parsed, role matching completed, and gap analysis generated."
+            message="Complete analysis finished successfully. Resume parsed, role matching completed, gap analysis generated, and development timeline created."
         )
         
     except Exception as e:
