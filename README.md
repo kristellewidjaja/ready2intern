@@ -35,7 +35,7 @@ College students (Freshman to Senior) in CS/Software Engineering programs seekin
 
 **Backend:**
 - Strands Agents SDK with Amazon Bedrock AgentCore
-- Anthropic Claude 3.7 Sonnet (via Amazon Bedrock)
+- Anthropic Claude 4.5 Sonnet (via Amazon Bedrock)
 - Python (FastAPI)
 - AWS (Lambda, API Gateway, DynamoDB, S3)
 
