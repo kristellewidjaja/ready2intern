@@ -6,6 +6,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchResults } from '../services/api';
 import { OverallScoreCard } from '../components/OverallScoreCard';
 import { CategoryScoreCard } from '../components/CategoryScoreCard';
+import { StrengthsSection } from '../components/StrengthsSection';
+import { GapsSection } from '../components/GapsSection';
 import type { ResultsResponse } from '../types';
 
 export const ResultsPage = () => {
@@ -138,10 +140,16 @@ export const ResultsPage = () => {
           </div>
         )}
 
-        {/* Placeholder for future sections */}
+        {/* Strengths Section */}
+        {results.match_analysis && <StrengthsSection matchAnalysis={results.match_analysis} />}
+
+        {/* Gaps Section */}
+        {results.gap_analysis && <GapsSection gapAnalysis={results.gap_analysis} />}
+
+        {/* Placeholder for Timeline */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8 text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            📊 Detailed strengths, gaps, and timeline sections coming in next feature slices...
+            📅 Timeline visualization coming in next feature slice...
           </p>
         </div>
       </div>

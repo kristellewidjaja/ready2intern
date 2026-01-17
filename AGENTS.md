@@ -185,6 +185,8 @@ Track implementation status in this file using:
 - ✅ Gap analysis (technical, experience, company fit, resume gaps with recommendations)
 - ✅ Timeline generation (personalized development timeline with phases, tasks, milestones)
 - ✅ Results page (overall score display with animated circular progress, score breakdown)
+- ✅ Strengths display (key highlights, category-specific strengths with evidence)
+- ✅ Gaps display (expandable cards, priority badges, type/priority filters, quick wins, recommendations)
 
 ## Implementation Notes
 
@@ -296,6 +298,39 @@ backend/
 - No re-renders on hover (tooltip in same component)
 - Three cards render efficiently with minimal overhead
 - All interactions feel smooth and responsive
+
+### Week 6 - Strengths & Gaps Display (Completed Jan 17, 2026)
+
+**Key Decisions:**
+- Progressive disclosure: Key strengths highlighted first, then category details
+- Expandable gap cards with rich nested content (resources, projects, before/after)
+- Type and priority filtering for 16+ gaps without overwhelming users
+- Quick wins section prioritized at top for immediate actionable items
+- Color-coded priority system (red=high, orange=medium, yellow=low)
+- Icon-based visual identity for gap types (💻=tech, 🚀=experience, 🤝=fit, 📝=resume)
+
+**Components Created:**
+- StrengthsSection: Displays key strengths and category-specific strengths
+- GapCard: Expandable card with type-specific recommendation rendering
+- GapsSection: Gap list with filtering, quick wins, and summary stats
+
+**Reusable Patterns:**
+- Expandable card pattern with useState for show/hide state
+- Type and priority filtering with button groups
+- Empty state display when no results match filters
+- Nested content rendering based on gap type
+
+**Testing Approach:**
+- Frontend: 200+ tests across 3 test suites (StrengthsSection, GapCard, GapsSection)
+- Manual E2E: test_strengths_gaps_manual.py validates data structure
+- Integration: Verified with real session data
+
+**File Structure:**
+```
+frontend/src/components/{StrengthsSection,GapCard,GapsSection}.tsx
+frontend/src/components/__tests__/{StrengthsSection,GapCard,GapsSection}.test.tsx
+frontend/src/types/results.ts (extended with gap analysis types)
+```
 
 ## Implementation Notes
 
