@@ -110,7 +110,7 @@
 - [x] Add loading spinner component
 - [x] Display progress messages during analysis
 - [x] Handle API call to /api/analyze
-- [ ] Navigate to results page on success
+- [x] Navigate to results page on success
 - [ ] Show error modal on failure
 
 ### Analyze Button - Backend
@@ -216,19 +216,19 @@
 ## Week 6: Results Display & Export
 
 ### Results Retrieval - Backend
-- [ ] Create GET /api/results/{session_id} endpoint
-- [ ] Load all analysis JSON files from session directory
-- [ ] Combine into single response object
-- [ ] Add error handling for missing files
-- [ ] Return complete analysis results
+- [x] Create GET /api/results/{session_id} endpoint
+- [x] Load all analysis JSON files from session directory
+- [x] Combine into single response object
+- [x] Add error handling for missing files
+- [x] Return complete analysis results
 
 ### Overall Score Display - Frontend
-- [ ] Create ResultsPage component
-- [ ] Create OverallScoreCard component
-- [ ] Implement animated circular progress bar
-- [ ] Add score counting animation on mount
-- [ ] Display gradient background based on score range
-- [ ] Show status message (Excellent/Good/Needs Work)
+- [x] Create ResultsPage component
+- [x] Create OverallScoreCard component
+- [x] Implement animated circular progress bar
+- [x] Add score counting animation on mount
+- [x] Display gradient background based on score range
+- [x] Show status message (Excellent/Good/Needs Work)
 - [ ] Add confetti animation for high scores (optional)
 
 ### Score Breakdown Display - Frontend

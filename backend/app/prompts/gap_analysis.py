@@ -13,6 +13,8 @@ Focus on:
 3. **Specificity** - Concrete resources, projects, and action items
 4. **Encouragement** - Frame gaps as growth opportunities, not deficiencies
 
+CRITICAL: Keep your response concise. Identify 3-5 HIGH PRIORITY gaps per category maximum. Quality over quantity.
+
 Be honest but supportive. Remember this is for internship-level roles, not senior positions."""
 
 
@@ -231,6 +233,18 @@ Please provide a comprehensive gap analysis in the following JSON format:
     }}}}
   }}}}
 }}}}
+
+## CRITICAL REQUIREMENTS
+
+1. **LIMIT GAPS**: Identify maximum 3-5 gaps PER CATEGORY (technical, experience, company fit, resume)
+2. **LIMIT RECOMMENDATIONS**: Maximum 2 recommendations per gap
+3. **LIMIT RESOURCES**: Maximum 3 resources per recommendation
+4. **LIMIT PROJECT IDEAS**: Maximum 2 project ideas per experience gap
+5. **LIMIT QUICK WINS**: Maximum 3 quick wins total
+6. **LIMIT LONG-TERM GOALS**: Maximum 2 long-term goals total
+7. **BE CONCISE**: Keep descriptions to 1-2 sentences, not paragraphs
+
+FOCUS ON QUALITY OVER QUANTITY. Better to have 3 excellent, actionable gaps than 10 vague ones.
 
 ## GUIDELINES
 

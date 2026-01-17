@@ -2,7 +2,7 @@
  * API service for backend communication
  */
 import axios from 'axios';
-import type { UploadResponse, CompaniesResponse } from '../types';
+import type { UploadResponse, CompaniesResponse, ResultsResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -73,5 +73,13 @@ export interface AnalyzeResponse {
 
 export const analyzeResume = async (request: AnalyzeRequest): Promise<AnalyzeResponse> => {
   const response = await api.post<AnalyzeResponse>('/api/analyze', request);
+  return response.data;
+};
+
+/**
+ * Fetch complete analysis results
+ */
+export const fetchResults = async (sessionId: string): Promise<ResultsResponse> => {
+  const response = await api.get<ResultsResponse>(`/api/results/${sessionId}`);
   return response.data;
 };

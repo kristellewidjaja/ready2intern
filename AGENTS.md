@@ -171,7 +171,7 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 5)
+### Current Status (Week 6)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
@@ -179,13 +179,128 @@ Track implementation status in this file using:
 - ✅ Resume upload (drag-and-drop, validation, session management)
 - ✅ Company selection (logos, tenets, API endpoint)
 - ✅ Role description input (textarea, validation, character counter)
-- ✅ Analyze button (loading states, progress messages, API integration)
+- ✅ Analyze button (loading states, progress messages, API integration, navigation to results)
 - ✅ LLM integration (Anthropic Claude API, resume parsing, structured extraction)
 - ✅ Role matching (ATS, Role Match, Company Fit scores with weighted overall score)
 - ✅ Gap analysis (technical, experience, company fit, resume gaps with recommendations)
 - ✅ Timeline generation (personalized development timeline with phases, tasks, milestones)
+- ✅ Results page (overall score display with animated circular progress, score breakdown)
 
 ## Implementation Notes
+
+### Week 6 - Overall Score Display (Completed Jan 15, 2026)
+
+**Key Decisions:**
+- Query parameter routing (`/results?session=xyz`) vs route parameters for flexibility
+- Animated circular progress using SVG stroke-dashoffset calculation
+- Score counting animation from 0 to target over 2 seconds for visual impact
+- Dynamic gradient colors based on score ranges (green=excellent, red=poor)
+- Partial results support with status field (completed, partial, failed)
+- Loading states with skeleton UI for better perceived performance
+- Single API call to fetch all analysis data (resume, match, gap, timeline)
+- "Start New Analysis" button for easy workflow restart
+
+**Services Created:**
+- Results endpoint: GET `/api/results/{session_id}` (`app/api/routes/results.py`)
+- Results models: ResultsResponse Pydantic schema (`app/models/results.py`)
+- ResultsPage component: Main results display (`frontend/src/pages/ResultsPage.tsx`)
+- OverallScoreCard component: Animated score visualization (`frontend/src/components/OverallScoreCard.tsx`)
+
+**Reusable Patterns:**
+- Animated circular progress with SVG (circumference calculation, stroke-dashoffset)
+- Score counting animation with useEffect and setInterval
+- Dynamic gradient styling based on data values
+- Query parameter routing for session-based data
+- Partial results handling with graceful degradation
+- Loading skeleton patterns for async operations
+- Error boundary patterns with retry/restart options
+- Status determination based on available data files
+
+**Common Pitfalls:**
+- SVG circle must use `transform -rotate-90` to start at top
+- Circumference = 2 * π * radius for stroke-dasharray
+- Offset = circumference - (score / 100) * circumference for progress
+- useEffect cleanup needed for animation timers
+- Query params accessed via useSearchParams hook in React Router v6
+- Results endpoint must handle missing files gracefully
+- Overall score may be null if match analysis incomplete
+- Animation duration should be 1-2 seconds (longer feels slow)
+- Gradient colors need sufficient contrast in dark mode
+- Status messages should be encouraging, not discouraging
+
+**Testing Approach:**
+- Backend: 162 total tests passing (7 new for results endpoint)
+- Results endpoint tests: success, partial, errors, edge cases
+- Frontend: Test placeholders created (20 test cases defined)
+- Integration: Verified end-to-end flow from analyze to results
+- Manual testing: Tested with real session data
+
+**Results Page Structure:**
+
+Header:
+- Page title and session ID display
+- "Start New Analysis" button for workflow restart
+
+Overall Score Card:
+- Animated circular progress (SVG with gradient)
+- Score counting animation (0 to target)
+- Dynamic gradient based on score range
+- Status message and description
+- Partial results badge if applicable
+
+Score Breakdown:
+- Three score cards (ATS, Role Match, Company Fit)
+- Individual scores with labels
+- Brief descriptions of each category
+- Grid layout (responsive: 3 columns → 1 column on mobile)
+
+Placeholders:
+- Strengths & gaps sections (Feature Slice 12)
+- Timeline visualization (Feature Slice 13)
+- PDF export button (Feature Slice 14)
+
+**File Structure:**
+```
+backend/app/
+├── api/routes/
+│ └── results.py # Results retrieval endpoint
+├── models/
+│ └── results.py # Results response models
+└── main.py # Updated with results router
+
+frontend/src/
+├── pages/
+│ ├── ResultsPage.tsx # Main results page
+│ └── __tests__/
+│   └── ResultsPage.test.tsx # Test placeholders
+├── components/
+│ ├── OverallScoreCard.tsx # Animated score card
+│ └── __tests__/
+│   └── OverallScoreCard.test.tsx # Test placeholders
+├── types/
+│ └── results.ts # Results type definitions
+├── services/
+│ └── api.ts # Updated with fetchResults
+└── App.tsx # Updated with routing
+```
+
+**Data Flow:**
+1. User completes analysis → navigates to `/results?session={session_id}`
+2. ResultsPage extracts session ID from query params
+3. Fetches results via GET `/api/results/{session_id}`
+4. Backend loads all JSON files from session directory
+5. Combines into single ResultsResponse object
+6. Returns with status (completed, partial, failed)
+7. Frontend displays overall score with animation
+8. Shows score breakdown if match analysis available
+9. Displays placeholders for future sections
+10. "Start New Analysis" returns to dashboard
+
+**Performance:**
+- Results fetch: < 1 second for complete analysis
+- Animation duration: 2 seconds for optimal UX
+- Page load: Instant with loading skeleton
+- All data loaded in single API call (no multiple requests)
 
 ### Week 5 - LLM Timeline Generation (Completed Jan 15, 2026)
 

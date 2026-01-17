@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FileDropzone } from '../components/FileDropzone';
 import { CompanyLogoSelector } from '../components/CompanyLogoSelector';
@@ -14,6 +15,7 @@ interface HealthStatus {
 }
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,10 +69,10 @@ export const Dashboard = () => {
         role_description: roleDescription,
       });
 
-      console.log('Analysis started:', response);
-      alert(`Analysis started! Analysis ID: ${response.analysis_id}\n\n${response.message}`);
+      console.log('Analysis completed:', response);
       
-      // TODO: Navigate to results page in future feature slice
+      // Navigate to results page with session ID
+      navigate(`/results?session=${sessionId}`);
     } catch (err) {
       console.error('Analysis failed:', err);
       alert('Failed to start analysis. Please try again.');
