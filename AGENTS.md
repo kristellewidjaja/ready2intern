@@ -188,6 +188,161 @@ Track implementation status in this file using:
 - ✅ Strengths display (key highlights, category-specific strengths with evidence)
 - ✅ Gaps display (expandable cards, priority badges, type/priority filters, quick wins, recommendations)
 
+### Week 6 - Timeline Display (Completed Jan 17, 2026)
+
+**Key Decisions:**
+- Dual view modes: "By Phase" for detailed planning, "Week by Week" for daily execution
+- Expandable phase cards with comprehensive task details (resources, dependencies, success criteria)
+- Priority-based and intensity-based color coding for visual hierarchy
+- Progressive disclosure: metadata summary → phases/weekly → critical path → flexibility/motivation
+- Icon-based visual identity for instant recognition (📅, 📋, 📆, 🚨, 🔄, 💪)
+- Responsive metadata cards (4 columns → 1 column on mobile)
+- Task-to-title lookup for critical path display (graceful fallback if task not found)
+- Expand All/Collapse All for power users who want full visibility
+
+**Components Created:**
+- TimelineSection: Main container with view toggle and all sections
+- PhaseCard: Reusable expandable card for phase details
+
+**Reusable Patterns:**
+- View mode toggle pattern (phases vs weekly) with useState
+- Expandable card with controlled state (expand/collapse)
+- Expand All propagation (parent state controls all children)
+- Priority color mapping function (high=red, medium=orange, low=yellow)
+- Intensity badge styling function (light=green, moderate=yellow, intensive=red)
+- Resource list truncation (show first 3, indicate count of remaining)
+- Task lookup by ID across all phases (for critical path display)
+- Responsive grid with Tailwind breakpoints (md:grid-cols-4)
+- Conditional section rendering (only show if data available)
+- Hover effects for interactive elements
+
+**Common Pitfalls:**
+- View mode toggle should hide expand button in weekly view
+- Expand All state must re-render PhaseCards with new isExpanded prop
+- Critical path task IDs may not match actual tasks - need fallback display
+- Date rendering must handle null values gracefully
+- Resource list should show "+N more" only if more than 3 resources
+- Phases may have empty task/milestone arrays - conditional rendering needed
+- Weekly breakdown dates may be null - check before rendering
+- Success criteria can be string or string[] - handle both
+- Priority and intensity colors must have sufficient contrast in dark mode
+- Phase expansion animation should be smooth (use transition classes)
+
+**Testing Approach:**
+- Frontend: 250+ tests for TimelineSection component
+- Frontend: 200+ tests for PhaseCard component
+- Updated ResultsPage tests with timeline integration
+- Manual testing: Verified with 3 real sessions (different timelines)
+- Test coverage: rendering, view modes, expansion, edge cases, accessibility
+- All rendering scenarios covered (with/without data, empty arrays, null values)
+
+**Timeline Structure:**
+
+Metadata Display (Always Visible):
+- 4 cards: Total Weeks, Hours/Week, Total Hours, Intensity Level
+- Feasibility assessment paragraph (if available)
+
+View Mode Toggle:
+- By Phase: Show expandable phase cards with full details
+- Week by Week: Show weekly summary cards with deliverables
+
+Phase Card (Expandable):
+1. Header: Phase number badge, title, week range, task count, hours/week
+2. Description: Full phase description paragraph
+3. Focus Areas: Bulleted list of key focus areas
+4. Tasks: Task cards with title, description, priority badge, hours, gap references, resources (first 3)
+5. Milestones: Milestone cards with title, description, target date, completion criteria, deliverables
+6. Success Metrics: Bulleted list of measurable outcomes
+
+Weekly Card:
+- Week number, date range (if available)
+- Phase name and focus description
+- Task list (titles only)
+- Hours estimate badge
+- Key deliverable
+
+Critical Path (Red):
+- Must-complete tasks for deadline
+- Task titles looked up from phases
+
+Flexibility Notes (Yellow):
+- Adjustment suggestions if timeline too aggressive
+
+Motivation Tips (Green):
+- Encouragement and momentum tips
+
+**File Structure:**
+```
+frontend/src/
+├── components/
+│   ├── TimelineSection.tsx              # Main timeline component (300+ lines)
+│   ├── PhaseCard.tsx                    # Expandable phase card (220+ lines)
+│   └── __tests__/
+│       ├── TimelineSection.test.tsx     # 250+ tests
+│       └── PhaseCard.test.tsx           # 200+ tests
+├── pages/
+│   ├── ResultsPage.tsx                  # Updated with TimelineSection
+│   └── __tests__/
+│       └── ResultsPage.test.tsx         # Updated with timeline tests
+└── types/
+    └── results.ts                       # Extended with timeline types
+
+backend/
+└── test_timeline_display_manual.py      # Manual E2E test script
+```
+
+**Data Flow:**
+1. Backend returns complete results including timeline data
+2. ResultsPage receives TimelineResult from API
+3. TimelineSection displays metadata and view toggle
+4. User selects "By Phase" or "Week by Week" view mode
+5. Corresponding view renders (phase cards or weekly cards)
+6. User can expand/collapse phases or use Expand All
+7. Critical path, flexibility notes, motivation tips always visible at bottom
+
+**Performance:**
+- View mode toggle: Fast re-render (minimal DOM changes)
+- Phase expansion: No parent re-render (internal state)
+- Expand All: Efficient batch state update
+- Conditional rendering: Only renders sections with data
+- No unnecessary re-renders on hover (CSS-only effects)
+
+**UI/UX Details:**
+
+Color Themes:
+- Priority High: Red (text-red-600, bg-red-50)
+- Priority Medium: Orange (text-orange-600, bg-orange-50)
+- Priority Low: Yellow (text-yellow-600, bg-yellow-50)
+- Intensity Light: Green badge
+- Intensity Moderate: Yellow badge
+- Intensity Intensive: Red badge
+- Critical Path: Red border and background
+- Flexibility: Yellow border and background
+- Motivation: Green border and background
+
+Interactive Elements:
+- View toggle buttons: Purple active state, gray inactive
+- Phase header: Hover effect (darker gradient)
+- Expand arrow: Rotates 180° on expansion
+- Weekly cards: Hover border color change
+- Expand All button: Text changes to "Collapse All"
+
+Responsive Design:
+- Metadata: 4 cols → 3 cols → 2 cols → 1 col
+- Phases: Full width at all breakpoints
+- Weekly: Full width at all breakpoints
+- Text sizes scale down on mobile (responsive typography)
+
+**Future Enhancements Considered:**
+- Progress tracking: Allow users to mark tasks as complete
+- Timeline export: Export to Google Calendar, Outlook, iCal formats
+- Interactive Gantt chart: Visual timeline with drag-and-drop
+- Dependency visualization: Show task dependencies as arrows/lines
+- Time estimate calculator: Adjust timeline based on available hours
+- Notification system: Reminders for upcoming milestones
+- Timeline comparison: Before/after timeline improvements
+- AI timeline adjustments: LLM suggests timeline modifications based on progress
+
 ## Implementation Notes
 
 ### Week 6 - Score Breakdown Display (Completed Jan 17, 2026)

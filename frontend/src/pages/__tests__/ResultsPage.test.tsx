@@ -55,8 +55,53 @@ const mockResultsResponse: ResultsResponse = {
       explanation: 'Strong overall match.',
     },
   },
-  gap_analysis: null,
-  timeline: null,
+  gap_analysis: {
+    summary: {
+      total_gaps: 5,
+      high_priority_count: 2,
+      medium_priority_count: 2,
+      low_priority_count: 1,
+      estimated_preparation_time: '6-8 weeks',
+      overall_assessment: 'Good foundation',
+    },
+    technical_gaps: [],
+    experience_gaps: [],
+    company_fit_gaps: [],
+    resume_optimization_gaps: [],
+    quick_wins: [],
+    long_term_development: [],
+    prioritized_action_plan: {},
+  },
+  timeline: {
+    metadata: {
+      total_weeks: 12,
+      total_hours: 144,
+      hours_per_week: 12,
+      start_date: '2026-01-15',
+      target_deadline: '2026-04-09',
+      intensity_level: 'moderate',
+      feasibility_assessment: 'Highly feasible',
+    },
+    phases: [
+      {
+        phase_id: 'phase_1',
+        phase_number: 1,
+        title: 'Foundation Phase',
+        description: 'Build foundation',
+        start_week: 1,
+        end_week: 3,
+        focus_areas: ['Resume'],
+        tasks: [],
+        milestones: [],
+        estimated_hours_per_week: 12,
+        success_metrics: [],
+      },
+    ],
+    weekly_breakdown: [],
+    critical_path: [],
+    flexibility_notes: [],
+    motivation_tips: [],
+  },
   message: 'Analysis complete',
 };
 
@@ -288,20 +333,64 @@ describe('ResultsPage', () => {
     });
   });
 
-  describe('Future Sections Placeholder', () => {
+  describe('Timeline Display', () => {
     beforeEach(() => {
       vi.mocked(api.fetchResults).mockResolvedValue(mockResultsResponse);
     });
 
-    it('shows placeholder for future sections', async () => {
+    it('shows timeline section when timeline data is available', async () => {
       renderWithRouter();
 
       await waitFor(() => {
-        expect(
-          screen.getByText(
-            /Detailed strengths, gaps, and timeline sections coming in next feature slices.../
-          )
-        ).toBeInTheDocument();
+        expect(screen.getByText('📅 Your Development Timeline')).toBeInTheDocument();
+      });
+    });
+
+    it('displays timeline metadata', async () => {
+      renderWithRouter();
+
+      await waitFor(() => {
+        expect(screen.getByText('12')).toBeInTheDocument(); // Total weeks
+        expect(screen.getByText('144')).toBeInTheDocument(); // Total hours
+        expect(screen.getByText('MODERATE')).toBeInTheDocument(); // Intensity
+      });
+    });
+
+    it('does not show timeline section when timeline is null', async () => {
+      const noTimeline: ResultsResponse = {
+        ...mockResultsResponse,
+        timeline: null,
+      };
+
+      vi.mocked(api.fetchResults).mockResolvedValue(noTimeline);
+      renderWithRouter();
+
+      await waitFor(() => {
+        expect(screen.getByText('Your Analysis Results')).toBeInTheDocument();
+      });
+
+      expect(screen.queryByText('📅 Your Development Timeline')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Strengths and Gaps Display', () => {
+    beforeEach(() => {
+      vi.mocked(api.fetchResults).mockResolvedValue(mockResultsResponse);
+    });
+
+    it('shows strengths section when match analysis is available', async () => {
+      renderWithRouter();
+
+      await waitFor(() => {
+        expect(screen.getByText('💪 Your Strengths')).toBeInTheDocument();
+      });
+    });
+
+    it('shows gaps section when gap analysis is available', async () => {
+      renderWithRouter();
+
+      await waitFor(() => {
+        expect(screen.getByText('🎯 Areas for Improvement')).toBeInTheDocument();
       });
     });
   });

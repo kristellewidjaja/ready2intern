@@ -8,6 +8,7 @@ import { OverallScoreCard } from '../components/OverallScoreCard';
 import { CategoryScoreCard } from '../components/CategoryScoreCard';
 import { StrengthsSection } from '../components/StrengthsSection';
 import { GapsSection } from '../components/GapsSection';
+import { TimelineSection } from '../components/TimelineSection';
 import type { ResultsResponse } from '../types';
 
 export const ResultsPage = () => {
@@ -146,12 +147,8 @@ export const ResultsPage = () => {
         {/* Gaps Section */}
         {results.gap_analysis && <GapsSection gapAnalysis={results.gap_analysis} />}
 
-        {/* Placeholder for Timeline */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8 text-center">
-          <p className="text-gray-500 dark:text-gray-400">
-            📅 Timeline visualization coming in next feature slice...
-          </p>
-        </div>
+        {/* Timeline Section */}
+        {results.timeline && <TimelineSection timeline={results.timeline} />}
       </div>
     </div>
   );

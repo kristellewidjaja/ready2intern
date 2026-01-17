@@ -134,13 +134,79 @@ export interface GapAnalysis {
   prioritized_action_plan: any;
 }
 
+// Timeline Types
+export interface Task {
+  task_id: string;
+  title: string;
+  description: string;
+  gap_ids: string[];
+  estimated_hours: number;
+  priority: 'high' | 'medium' | 'low';
+  dependencies: string[];
+  resources: string[];
+  success_criteria: string | string[];
+}
+
+export interface Milestone {
+  milestone_id: string;
+  title: string;
+  description: string;
+  target_date: string | null;
+  completion_criteria: string[];
+  deliverables: string[];
+}
+
+export interface TimelinePhase {
+  phase_id: string;
+  phase_number: number;
+  title: string;
+  description: string;
+  start_week: number;
+  end_week: number;
+  focus_areas: string[];
+  tasks: Task[];
+  milestones: Milestone[];
+  estimated_hours_per_week: number;
+  success_metrics: string[];
+}
+
+export interface WeeklySummary {
+  week_number: number;
+  start_date: string | null;
+  end_date: string | null;
+  phase: string;
+  focus: string;
+  tasks: string[];
+  estimated_hours: number;
+  key_deliverable: string;
+}
+
+export interface TimelineMetadata {
+  total_weeks: number;
+  total_hours: number;
+  hours_per_week: number;
+  start_date: string | null;
+  target_deadline: string | null;
+  intensity_level: 'light' | 'moderate' | 'intensive';
+  feasibility_assessment: string;
+}
+
+export interface TimelineResult {
+  metadata: TimelineMetadata;
+  phases: TimelinePhase[];
+  weekly_breakdown: WeeklySummary[];
+  critical_path: string[];
+  flexibility_notes: string[];
+  motivation_tips: string[];
+}
+
 export interface ResultsResponse {
   session_id: string;
   status: 'completed' | 'partial' | 'failed';
   resume_analysis: any | null;
   match_analysis: MatchAnalysis | null;
   gap_analysis: GapAnalysis | null;
-  timeline: any | null;
+  timeline: TimelineResult | null;
   overall_score: number | null;
   message: string;
 }
