@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchResults } from '../services/api';
 import { OverallScoreCard } from '../components/OverallScoreCard';
+import { CategoryScoreCard } from '../components/CategoryScoreCard';
 import type { ResultsResponse } from '../types';
 
 export const ResultsPage = () => {
@@ -103,7 +104,7 @@ export const ResultsPage = () => {
           <OverallScoreCard score={results.overall_score} status={results.status} />
         )}
 
-        {/* Score Breakdown - Coming Soon */}
+        {/* Score Breakdown */}
         {results.match_analysis && (
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
@@ -111,43 +112,28 @@ export const ResultsPage = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* ATS Score */}
-              <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                  {results.match_analysis.ats_score.score}
-                </div>
-                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                  ATS Score
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Resume formatting & keywords
-                </div>
-              </div>
+              <CategoryScoreCard
+                title="ATS Score"
+                scoreDetail={results.match_analysis.ats_score}
+                icon="🤖"
+                color="blue"
+              />
 
               {/* Role Match Score */}
-              <div className="text-center">
-                <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                  {results.match_analysis.role_match_score.score}
-                </div>
-                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                  Role Match
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Skills & experience alignment
-                </div>
-              </div>
+              <CategoryScoreCard
+                title="Role Match"
+                scoreDetail={results.match_analysis.role_match_score}
+                icon="🎯"
+                color="purple"
+              />
 
               {/* Company Fit Score */}
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">
-                  {results.match_analysis.company_fit_score.score}
-                </div>
-                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                  Company Fit
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Values & culture alignment
-                </div>
-              </div>
+              <CategoryScoreCard
+                title="Company Fit"
+                scoreDetail={results.match_analysis.company_fit_score}
+                icon="🏢"
+                color="green"
+              />
             </div>
           </div>
         )}

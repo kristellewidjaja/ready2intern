@@ -232,12 +232,12 @@
 - [ ] Add confetti animation for high scores (optional)
 
 ### Score Breakdown Display - Frontend
-- [ ] Create CategoryScoreCard component
-- [ ] Display three score cards: ATS, Role Match, Company Fit
-- [ ] Implement individual progress bars
-- [ ] Add hover tooltips with score explanations
-- [ ] Make layout responsive (stacked on mobile)
-- [ ] Add icons for each category
+- [x] Create CategoryScoreCard component
+- [x] Display three score cards: ATS, Role Match, Company Fit
+- [x] Implement individual progress bars
+- [x] Add hover tooltips with score explanations
+- [x] Make layout responsive (stacked on mobile)
+- [x] Add icons for each category
 
 ### Strengths & Gaps Display - Frontend
 - [ ] Create StrengthsSection component
