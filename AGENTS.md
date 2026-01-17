@@ -188,6 +188,199 @@ Track implementation status in this file using:
 
 ## Implementation Notes
 
+### Week 6 - Score Breakdown Display (Completed Jan 17, 2026)
+
+**Key Decisions:**
+- CategoryScoreCard component with hover tooltip pattern for detailed information
+- Three color themes (blue, purple, green) for visual distinction between score types
+- Animated progress bars with 1-second CSS transition for polish
+- Icons (🤖, 🎯, 🏢) provide instant visual recognition of score categories
+- Hover interaction shows detailed tooltip with strengths and weaknesses
+- Responsive grid layout (3 columns on desktop, 1 column on mobile)
+- Card hover effects (scale + shadow) for satisfying interactive feedback
+- Brief explanation always visible, full details in tooltip (progressive disclosure)
+
+**Components Created:**
+- CategoryScoreCard: Reusable score card with progress bar, tooltip, and theming
+- Updated ResultsPage with three CategoryScoreCard instances
+
+**Reusable Patterns:**
+- Hover-based tooltip with useState for show/hide state
+- Color theme configuration object with all related classes
+- Animated progress bar with transition-all and dynamic width
+- Responsive grid with Tailwind md: breakpoint
+- Card hover effects: hover:scale-105 hover:shadow-lg
+- Conditional rendering of optional data (strengths, weaknesses)
+- Icon + text labeling pattern for visual identity
+- Line clamp for brief text with full text in tooltip
+
+**Common Pitfalls:**
+- Tooltip z-index must be higher than other elements (z-10)
+- Tooltip position must account for viewport edges (use absolute positioning)
+- Hover state should use onMouseEnter/Leave not onClick for better UX
+- Progress bar width must be set via inline style, not className (dynamic value)
+- Color theme classes must be pre-defined, can't be dynamically constructed
+- Strengths/weaknesses may be undefined or empty array - check both
+- Test hover interactions require @testing-library/user-event not fireEvent
+- Card border should be subtle (border-2) not overwhelming
+- Animation duration should be 1 second for progress bar (too fast feels jarring)
+- Tooltip should disappear immediately on mouse leave (no delay)
+
+**Testing Approach:**
+- Backend: No new backend logic needed, all data already in match_analysis
+- Frontend: 45 component tests for CategoryScoreCard
+  - Rendering tests (title, icon, score, explanation)
+  - Progress bar tests (width calculation, edge cases)
+  - Tooltip tests (show/hide, content, conditional rendering)
+  - Color theme tests (blue, purple, green)
+  - Accessibility tests (hover, keyboard)
+- ResultsPage: 40 updated tests for score breakdown section
+- Manual testing: Verified with real session data via curl
+
+**UI/UX Details:**
+
+Card Structure:
+1. Header: Icon (3xl emoji) + Title (text-lg font-semibold)
+2. Score Display: Large number (text-5xl) + "/100" (text-2xl muted)
+3. Progress Bar: Full-width bar with animated fill
+4. Brief Explanation: 2-line clamp, text-sm, always visible
+5. Hover Tooltip: Positioned below card, full details
+
+Tooltip Contents:
+- Full explanation paragraph
+- "✓ Strengths" heading with green color
+- Bullet list of strength items with green dots
+- "⚠ Areas for Improvement" heading with orange color
+- Bullet list of weakness items with orange dots
+- Sections only show if data available
+
+Color Themes:
+- Blue (ATS Score): Professional, technical, automated
+- Purple (Role Match): Central focus, most important score
+- Green (Company Fit): Cultural, values-based, human
+
+Responsive Design:
+- Desktop (≥768px): 3 columns, equal width, gap-6
+- Tablet (640-767px): 2 columns, adjust gaps
+- Mobile (<640px): 1 column, full width, stack cards
+
+**File Structure:**
+```
+frontend/src/
+├── components/
+│   ├── CategoryScoreCard.tsx           # Reusable score card component
+│   └── __tests__/
+│       └── CategoryScoreCard.test.tsx  # 45 component tests
+├── pages/
+│   ├── ResultsPage.tsx                 # Updated with score breakdown
+│   └── __tests__/
+│       └── ResultsPage.test.tsx        # 40 updated tests
+└── types/
+    └── results.ts                       # ScoreDetail interface
+
+backend/
+└── test_score_breakdown_manual.py      # Manual E2E test script
+```
+
+**Data Flow:**
+1. Backend returns match_analysis with three score details (ATS, Role Match, Company Fit)
+2. Each score detail includes: score, explanation, strengths[], weaknesses[]
+3. ResultsPage fetches results and passes each score detail to CategoryScoreCard
+4. CategoryScoreCard displays score, progress bar, brief explanation
+5. On hover, tooltip appears with full explanation + strengths + weaknesses
+6. Responsive grid adjusts layout based on viewport width
+
+**Performance:**
+- Progress bar animation: 1 second CSS transition
+- Hover tooltip: Instant display (no delay)
+- No re-renders on hover (tooltip in same component)
+- Three cards render efficiently with minimal overhead
+- All interactions feel smooth and responsive
+
+## Implementation Notes
+
+### Week 6 - Score Breakdown Display (Completed Jan 17, 2026)
+
+**Key Decisions:**
+- CategoryScoreCard component with hover tooltip pattern for detailed information
+- Three color themes (blue, purple, green) for visual distinction between score types
+- Animated progress bars with 1-second CSS transition for polish
+- Icons (🤖, 🎯, 🏢) provide instant visual recognition of score categories
+- Hover interaction shows detailed tooltip with strengths and weaknesses
+- Responsive grid layout (3 columns on desktop, 1 column on mobile)
+- Card hover effects (scale + shadow) for satisfying interactive feedback
+- Brief explanation always visible, full details in tooltip (progressive disclosure)
+
+**Components Created:**
+- CategoryScoreCard: Reusable score card with progress bar, tooltip, and theming
+- Updated ResultsPage with three CategoryScoreCard instances
+
+**Reusable Patterns:**
+- Hover-based tooltip with useState for show/hide state
+- Color theme configuration object with all related classes
+- Animated progress bar with transition-all and dynamic width
+- Responsive grid with Tailwind md: breakpoint
+- Card hover effects: hover:scale-105 hover:shadow-lg
+- Conditional rendering of optional data (strengths, weaknesses)
+- Icon + text labeling pattern for visual identity
+- Line clamp for brief text with full text in tooltip
+
+**Common Pitfalls:**
+- Tooltip z-index must be higher than other elements (z-10)
+- Tooltip position must account for viewport edges (use absolute positioning)
+- Hover state should use onMouseEnter/Leave not onClick for better UX
+- Progress bar width must be set via inline style, not className (dynamic value)
+- Color theme classes must be pre-defined, can't be dynamically constructed
+- Strengths/weaknesses may be undefined or empty array - check both
+- Test hover interactions require @testing-library/user-event not fireEvent
+- Card border should be subtle (border-2) not overwhelming
+- Animation duration should be 1 second for progress bar (too fast feels jarring)
+- Tooltip should disappear immediately on mouse leave (no delay)
+
+**Testing Approach:**
+- Backend: No new backend logic needed, all data already in match_analysis
+- Frontend: 45 component tests for CategoryScoreCard
+  - Rendering tests (title, icon, score, explanation)
+  - Progress bar tests (width calculation, edge cases)
+  - Tooltip tests (show/hide, content, conditional rendering)
+  - Color theme tests (blue, purple, green)
+  - Accessibility tests (hover, keyboard)
+- ResultsPage: 40 updated tests for score breakdown section
+- Manual testing: Verified with real session data via curl
+
+**File Structure:**
+```
+frontend/src/
+├── components/
+│   ├── CategoryScoreCard.tsx           # Reusable score card component
+│   └── __tests__/
+│       └── CategoryScoreCard.test.tsx  # 45 component tests
+├── pages/
+│   ├── ResultsPage.tsx                 # Updated with score breakdown
+│   └── __tests__/
+│       └── ResultsPage.test.tsx        # 40 updated tests
+└── types/
+    └── results.ts                       # ScoreDetail interface
+
+backend/
+└── test_score_breakdown_manual.py      # Manual E2E test script
+```
+
+**Data Flow:**
+1. Backend returns match_analysis with three score details (ATS, Role Match, Company Fit)
+2. Each score detail includes: score, explanation, strengths[], weaknesses[]
+3. ResultsPage fetches results and passes each score detail to CategoryScoreCard
+4. CategoryScoreCard displays score, progress bar, brief explanation
+5. On hover, tooltip appears with full explanation + strengths + weaknesses
+6. Responsive grid adjusts layout based on viewport width
+
+**Performance:**
+- Progress bar animation: 1 second CSS transition
+- Hover tooltip: Instant display (no delay)
+- No re-renders on hover (tooltip in same component)
+- Three cards render efficiently with minimal overhead
+- All interactions feel smooth and responsive
+
 ### Week 6 - Overall Score Display (Completed Jan 15, 2026)
 
 **Key Decisions:**
