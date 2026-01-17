@@ -6,6 +6,7 @@ import json
 import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
+from json_repair import repair_json
 
 from app.services.llm_service import LLMService
 from app.services.company_service import CompanyService
@@ -75,8 +76,8 @@ class GapAnalysisService:
             llm_response = await self.llm_service.generate_completion(
                 prompt=prompt,
                 system_prompt=SYSTEM_PROMPT,
-                max_tokens=16384,  # Large token limit for comprehensive recommendations
-                temperature=0.4,  # Slightly higher for creative recommendations
+                max_tokens=10000,  # Reduced to prevent incomplete JSON (was 16384)
+                temperature=0.3,  # Lower for more consistent formatting
             )
             
             # Step 5: Parse LLM response
@@ -129,7 +130,7 @@ class GapAnalysisService:
     
     def _parse_llm_response(self, llm_response: str) -> Dict[str, Any]:
         """
-        Parse LLM response into structured format.
+        Parse LLM response into structured format using json-repair library.
         
         Args:
             llm_response: Raw response from LLM
@@ -155,23 +156,39 @@ class GapAnalysisService:
             
             response = response.strip()
             
-            # Try to find JSON object boundaries if parsing fails
+            # Try standard JSON parsing first
             try:
                 parsed = json.loads(response)
+                logger.info("Successfully parsed JSON on first attempt")
             except json.JSONDecodeError as e:
-                logger.warning(f"Initial JSON parse failed: {e}")
-                logger.warning("Attempting to extract JSON object from response...")
+                logger.warning(f"Initial JSON parse failed at position {e.pos}: {e.msg}")
+                logger.info("Attempting to repair JSON using json-repair library...")
                 
-                # Try to find the first { and last }
-                start_idx = response.find('{')
-                end_idx = response.rfind('}')
-                
-                if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
-                    response = response[start_idx:end_idx + 1]
-                    logger.info(f"Extracted JSON from position {start_idx} to {end_idx}")
-                    parsed = json.loads(response)
-                else:
-                    raise
+                try:
+                    # Use json-repair library to fix malformed JSON
+                    repaired_json = repair_json(response)
+                    parsed = json.loads(repaired_json)
+                    logger.info("Successfully repaired and parsed JSON")
+                except Exception as repair_error:
+                    logger.error(f"JSON repair failed: {repair_error}")
+                    
+                    # Last resort: try to extract just the JSON object
+                    start_idx = response.find('{')
+                    end_idx = response.rfind('}')
+                    
+                    if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+                        response = response[start_idx:end_idx + 1]
+                        logger.info(f"Extracted JSON boundaries from {start_idx} to {end_idx}")
+                        
+                        try:
+                            repaired_json = repair_json(response)
+                            parsed = json.loads(repaired_json)
+                            logger.info("Successfully repaired extracted JSON")
+                        except Exception:
+                            logger.error("All JSON repair attempts failed")
+                            raise ValueError(f"Invalid JSON response from LLM: {e.msg}")
+                    else:
+                        raise ValueError(f"Invalid JSON response from LLM: {e.msg}")
             
             # Validate required fields
             required_fields = [

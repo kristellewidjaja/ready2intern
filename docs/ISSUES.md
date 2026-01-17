@@ -6,13 +6,36 @@
 
 ## Active Issues
 
-_No active issues. Feature Slice 9 completed successfully._
+_No active issues. Gap analysis JSON parsing fix implemented._
 
 ---
 
 ## Resolved Issues
 
-_No issues encountered during Feature Slices 1-3._
+#### Issue #1: Gap Analysis LLM JSON Parsing Failures ✅ RESOLVED
+**Discovered:** January 15, 2026 (Feature Slice 10 Testing)
+**Resolved:** January 15, 2026
+**Severity:** High
+**Impact:** Analyze endpoint fails intermittently during gap analysis phase, preventing users from completing analysis
+
+**Description:**
+The gap analysis service occasionally received malformed JSON from the LLM (Claude API), causing the analyze endpoint to fail with 500 errors. The JSON parsing error typically occurred around character 53,000-72,000.
+
+**Root Cause:**
+- Gap analysis used max_tokens=12000-16384 which could be too high
+- Comprehensive prompts asked for very detailed responses
+- LLM sometimes generated JSON with syntax errors in large responses
+
+**Resolution Implemented:**
+1. ✅ Installed `json-repair==0.55.0` library for robust JSON fixing
+2. ✅ Simplified `_parse_llm_response()` to use json-repair library
+3. ✅ Added "LIMIT GAPS" instructions to prompt (max 3-5 per category)
+4. ✅ Reduced max_tokens from 16384 → 12000 → 10000
+5. ✅ Lowered temperature from 0.4 → 0.3 for consistent formatting
+6. ✅ Multi-tier repair strategy: standard parse → json-repair → extract+repair
+7. ✅ Improved logging to show repair attempts
+
+**Testing:** Ready for testing with full end-to-end analysis flow
 
 ---
 
