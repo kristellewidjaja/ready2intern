@@ -7,7 +7,7 @@
 
 **Strategy:** Vertical Slices (End-to-End Features)  
 **Approach:** Build complete features from UI → API → LLM → Storage  
-**Timeline:** 6 weeks (1-week feature cycles)  
+**Timeline:** 7 weeks (1-week feature cycles)  
 **Handoff Method:** Feature-by-feature with working deliverables
 
 ---
@@ -17,8 +17,10 @@
 Each feature slice includes:
 1. **Frontend:** UI components + state management
 2. **Backend:** API endpoint + request/response handling
-3. **Business Logic:** LLM integration + file system operations
+3. **Business Logic:** Strands-agent orchestration + LLM integration + file system operations
 4. **Integration:** End-to-end testing of the complete feature
+
+LLM business logic is executed through local-first Strands agents coordinated by an orchestrator. AgentCore hosting and Bedrock wiring are deferred to a later phase.
 
 ---
 
@@ -539,7 +541,55 @@ Show development timeline with phases and tasks.
 
 ---
 
-## Feature Slice 14: PDF Export (Week 6)
+## Feature Slice 14: Strands Agent Migration (Local Anthropic Runtime) (Week 7)
+
+### Goal
+Refactor the analysis workflow to true Strands-agent architecture while preserving current API contracts and result schemas.
+
+### Backend Tasks
+- Implement Strands agents:
+  - Document Agent
+  - Evaluation Agent
+  - Recommendation Agent
+  - Planner Agent
+  - Orchestrator Agent
+- Replace direct service chaining with orchestrator-managed agent execution
+- Keep result artifacts unchanged:
+  - `resume_analysis.json`
+  - `match_analysis.json`
+  - `gap_analysis.json`
+  - `timeline.json`
+- Keep existing FastAPI routes operational through an adapter layer
+
+### Runtime/Config Tasks (Local-First)
+- Configure Strands runtime to use `ANTHROPIC_API_KEY`
+- Keep existing local FastAPI entrypoint
+- Add/update environment contract:
+  - `ANTHROPIC_API_KEY` (required)
+  - `ANTHROPIC_MODEL` (defaulted)
+  - retries/timeouts for local execution
+- Explicitly defer Bedrock/AgentCore deployment wiring
+
+### Integration
+- `/api/analyze` triggers orchestrator -> agents
+- `/api/results/{session_id}` response shape remains unchanged
+- Partial results behavior is preserved if downstream agent fails
+
+### Acceptance Criteria
+- ✓ All four analysis stages execute as Strands agents
+- ✓ Local run works without Bedrock or AgentCore
+- ✓ Frontend requires no API payload changes
+- ✓ Existing session output schema remains backward compatible
+- ✓ Regression tests pass for analyze/results flow
+
+### Deliverables
+- Strands agent modules with orchestrator wiring
+- Updated local runtime configuration and `.env` documentation
+- Migration notes with rollback strategy
+
+---
+
+## Feature Slice 15: PDF Export (Week 7)
 
 ### Goal
 Allow users to download analysis as PDF.
@@ -577,7 +627,7 @@ Allow users to download analysis as PDF.
 
 ---
 
-## Feature Slice 15: Error Handling & Polish (Week 6)
+## Feature Slice 16: Error Handling & Polish (Week 7)
 
 ### Goal
 Add comprehensive error handling and UI polish.
@@ -707,8 +757,17 @@ data/
 11. ✓ Results - Score Breakdown (Week 6)
 12. ✓ Results - Strengths & Gaps (Week 6)
 13. ✓ Results - Timeline (Week 6)
-14. ✓ PDF Export (Week 6)
-15. ✓ Error Handling & Polish (Week 6)
+14. ⏳ Strands Agent Migration (Local Anthropic Runtime) (Week 7)
+15. ⏳ PDF Export (Week 7)
+16. ⏳ Error Handling & Polish (Week 7)
+
+---
+
+## Deferred Scope (Post-Slice 16)
+
+- AgentCore runtime hosting configuration
+- Bedrock model/provider integration path
+- Cloud deployment primitives (Gateway/Identity/Memory)
 
 ---
 

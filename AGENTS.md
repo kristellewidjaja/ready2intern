@@ -4,7 +4,7 @@
 
 Ready2Intern is an AI-powered resume evaluator for tech internships using a multi-agent system with Anthropic Claude API.
 
-**Architecture:** React frontend ←→ FastAPI backend ←→ Claude API → Filesystem storage (no database)
+**Architecture:** React frontend ←→ FastAPI backend/orchestrator ←→ Strands Agents (Anthropic API) → Filesystem storage (no database)
 
 ## Setup Commands
 
@@ -171,7 +171,7 @@ Track implementation status in this file using:
 - ✅ Complete
 - ❌ Blocked
 
-### Current Status (Week 6)
+### Current Status (Week 7 Planning Update)
 - ✅ Backend setup (Python 3.13 + FastAPI + uv)
 - ✅ Frontend setup (React 19 + TypeScript + Vite + Tailwind v4)
 - ✅ Health check endpoint
@@ -187,6 +187,10 @@ Track implementation status in this file using:
 - ✅ Results page (overall score display with animated circular progress, score breakdown)
 - ✅ Strengths display (key highlights, category-specific strengths with evidence)
 - ✅ Gaps display (expandable cards, priority badges, type/priority filters, quick wins, recommendations)
+- ✅ Timeline display (Feature Slice 13)
+- ⏳ Strands Agent migration (Feature Slice 14, local Anthropic runtime)
+- ⏳ PDF export (Feature Slice 15)
+- ⏳ Error handling & polish (Feature Slice 16)
 
 ### Week 6 - Timeline Display (Completed Jan 17, 2026)
 
@@ -640,7 +644,8 @@ Score Breakdown:
 Placeholders:
 - Strengths & gaps sections (Feature Slice 12)
 - Timeline visualization (Feature Slice 13)
-- PDF export button (Feature Slice 14)
+- Strands migration checkpoint (Feature Slice 14)
+- PDF export button (Feature Slice 15)
 
 **File Structure:**
 ```

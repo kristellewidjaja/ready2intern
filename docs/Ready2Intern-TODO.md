@@ -213,7 +213,7 @@
 
 ---
 
-## Week 6: Results Display & Export
+## Week 6: Results Display
 
 ### Results Retrieval - Backend
 - [x] Create GET /api/results/{session_id} endpoint
@@ -258,6 +258,49 @@
 - [x] Highlight milestones
 - [x] Add progress indicators (optional for POC)
 
+### Integration & Testing
+- [ ] Test results endpoint returns complete data
+- [ ] Verify all UI components display correctly
+- [ ] Test animations and interactions
+- [ ] Test responsive layout on all screen sizes
+
+---
+
+## Week 7: Strands Agent Migration (Local Anthropic Runtime)
+
+### Strands Migration - Backend
+- [ ] Add Strands SDK dependencies and local runtime setup
+- [ ] Create Document Agent (resume extraction)
+- [ ] Create Evaluation Agent (role + company matching)
+- [ ] Create Recommendation Agent (gap analysis)
+- [ ] Create Planner Agent (timeline generation)
+- [ ] Create Orchestrator Agent for sequential execution
+- [ ] Replace direct service chaining with orchestrator-driven agent flow
+- [ ] Preserve output artifact contracts:
+  - [ ] resume_analysis.json
+  - [ ] match_analysis.json
+  - [ ] gap_analysis.json
+  - [ ] timeline.json
+- [ ] Keep existing FastAPI route contracts unchanged (`/api/analyze`, `/api/results/{session_id}`)
+
+### Runtime & Environment
+- [ ] Keep local-first runtime (no Bedrock, no AgentCore required for this slice)
+- [ ] Require `ANTHROPIC_API_KEY` in backend `.env`
+- [ ] Set default `ANTHROPIC_MODEL` for Strands execution
+- [ ] Configure retries/timeouts for local execution
+- [ ] Update env docs with migration notes and rollback steps
+
+### Regression Testing
+- [ ] Happy path: all 4 agent outputs are generated
+- [ ] Partial failure: completed outputs are preserved
+- [ ] API contract regression: results response schema unchanged
+- [ ] Session continuity: same `session_id` across all agent stages
+- [ ] Frontend compatibility: existing results page renders without type changes
+
+---
+
+## Week 7: PDF Export
+
 ### PDF Export - Backend
 - [ ] Install PDF generation library (ReportLab or WeasyPrint)
 - [ ] Create PDF template with branding
@@ -279,16 +322,12 @@
 - [ ] Provide success feedback
 
 ### Integration & Testing
-- [ ] Test results endpoint returns complete data
-- [ ] Verify all UI components display correctly
-- [ ] Test animations and interactions
 - [ ] Verify PDF generates with all content
 - [ ] Test PDF download works
-- [ ] Test responsive layout on all screen sizes
 
 ---
 
-## Week 6: Error Handling, Polish & Deployment
+## Week 7: Error Handling, Polish & Deployment
 
 ### Error Handling - Frontend
 - [ ] Add React error boundaries
