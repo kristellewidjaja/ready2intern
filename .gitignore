@@ -213,3 +213,4 @@ data/resumes/
 # Ready2Intern - Session data
 backend/data/sessions/
 data/sessions/
+autoloop/run_history.jsonl
