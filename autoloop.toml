@@ -43,3 +43,5 @@ triage_labels = [
     "in-review",
     "needs-human",
 ]
+
+test_pattern = ""
